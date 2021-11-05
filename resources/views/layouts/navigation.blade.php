@@ -24,7 +24,7 @@
       @can('log-viewer') 
       <li class="nav-item">
         <x-nav-link :href="route('log-viewer::dashboard')">
-            {{ __('translations.menu.log-viewer') }}
+            {{ __('translations.dashboard.log-viewer') }}
         </x-nav-link>
       </li>             
       @endcan        

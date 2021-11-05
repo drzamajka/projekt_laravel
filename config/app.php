@@ -177,7 +177,7 @@ return [
         //Permissions and Roles
         Spatie\Permission\PermissionServiceProvider::class,
         //logi
-        //Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
  
 
     ],

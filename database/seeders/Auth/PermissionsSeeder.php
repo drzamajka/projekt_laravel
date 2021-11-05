@@ -36,7 +36,7 @@ class PermissionsSeeder extends Seeder
 
         // ADMINSTRATOR SYSTEMU
         $userRole = Role::findByName(config('app.admin_role'));
-        //$userRole->givePermissionTo('log-viewer');
+        $userRole->givePermissionTo('log-viewer');
 
         $userRole->givePermissionTo('users.index');
         $userRole->givePermissionTo('users.store');
