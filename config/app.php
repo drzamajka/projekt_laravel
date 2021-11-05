@@ -174,6 +174,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //Permissions and Roles
+        Spatie\Permission\PermissionServiceProvider::class,
+        //logi
+        //Arcanedev\LogViewer\LogViewerServiceProvider::class,
+ 
 
     ],
 
@@ -231,4 +236,6 @@ return [
 
     ],
 
+    'admin_role' => env('ADMIN_ROLE', 'admin'),
+    'user_role' => env('USER_ROLE', 'user'),
 ];
