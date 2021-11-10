@@ -237,5 +237,6 @@ return [
     ],
 
     'admin_role' => env('ADMIN_ROLE', 'admin'),
+    'creator_role' => env('CREATOR_ROLE', 'creator'),
     'user_role' => env('USER_ROLE', 'user'),
 ];

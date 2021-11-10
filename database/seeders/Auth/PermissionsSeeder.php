@@ -43,16 +43,10 @@ class PermissionsSeeder extends Seeder
         $userRole->givePermissionTo('users.destroy');
         $userRole->givePermissionTo('users.change_role');
 
-        // $userRole->givePermissionTo('category.index');
-        // $userRole->givePermissionTo('category.store');
-        // $userRole->givePermissionTo('manufacturer.index');
-        // $userRole->givePermissionTo('manufacturer.store');
-        // $userRole->givePermissionTo('product.index');
-        // $userRole->givePermissionTo('product.store');
+        // twurca 
+        $userRole = Role::findByName(config('app.creator_role'));
+
         // urzytkownik 
         $userRole = Role::findByName(config('app.user_role'));
-        // $userRole->givePermissionTo('category.index');
-        // $userRole->givePermissionTo('manufacturer.index');
-        // $userRole->givePermissionTo('product.store');
     }
 }
