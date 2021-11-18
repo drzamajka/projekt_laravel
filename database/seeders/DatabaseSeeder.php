@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\Auth\PermissionsSeeder;
+use Illuminate\Database\Seeder;
+use Database\Seeders\FilmSeeder;
+use Database\Seeders\GatunekSeeder;
+use Database\Seeders\GwiazdaSeeder;
 use Database\Seeders\Auth\RolesSeeder;
 use Database\Seeders\Auth\UsersSeeder;
-use Illuminate\Database\Seeder;
+use Database\Seeders\Auth\PermissionsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,5 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(PermissionsSeeder::class);
         $this->call(UsersSeeder::class);
+
+        $this->call(GatunekSeeder::class);
+        $this->call(GwiazdaSeeder::class);
+        $this->call(FilmSeeder::class);
     }
 }

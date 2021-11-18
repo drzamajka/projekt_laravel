@@ -29,6 +29,7 @@ class CreateFilmTable extends Migration
             $table->date('data_premiery');
             $table->text('opis');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

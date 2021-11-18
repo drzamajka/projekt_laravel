@@ -18,6 +18,7 @@ class CreateGwiazdaTable extends Migration
             $table->string('imie_gwiazdy');
             $table->string('nazwisko_gwiazdy');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

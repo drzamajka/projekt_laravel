@@ -17,6 +17,7 @@ class CreateGatunekTable extends Migration
             $table->id();
             $table->string('nazwa_gatunku')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

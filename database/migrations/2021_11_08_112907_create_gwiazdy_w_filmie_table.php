@@ -27,6 +27,7 @@ class CreateGwiazdyWFilmieTable extends Migration
             ->onDelete('no action');
             $table->string('rola');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
