@@ -16,11 +16,12 @@ class FilmFactory extends Factory
     public function definition()
     {
         return [
-            'id_gat' => Gatunek::select('id')->orderByRaw("RAND()")->first()->id,
-            'id_rezyser' => Gwiazda::select('id')->orderByRaw("RAND()")->first()->id,
+            'gatunek_id' => Gatunek::select('id')->orderByRaw("RAND()")->first()->id,
+            'gwiazda_id' => Gwiazda::select('id')->orderByRaw("RAND()")->first()->id,
             'tytul' => $this->faker->word(),
             'data_premiery' => $this->faker->dateTime(),
             'opis' => $this->faker->text(150),
+            'czyokladka' => False,
         ];
     }
 }

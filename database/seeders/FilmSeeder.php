@@ -19,7 +19,7 @@ class FilmSeeder extends Seeder
     {
         $this->faker = Faker::create();
 
-        Film::factory()->count(500)->create()->each(function ($film){
+        Film::factory()->count(30)->create()->each(function ($film){
             for( $i = 0; $i < rand(1, 5); $i++){
                 DB::table('gwiazdy_w_filmie')->insert([
                     'id_filmu' => $film->id,

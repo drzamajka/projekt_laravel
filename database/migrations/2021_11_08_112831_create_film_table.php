@@ -15,19 +15,20 @@ class CreateFilmTable extends Migration
     {
         Schema::create('film', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_gat');
-            $table->foreign('id_gat')
+            $table->unsignedBigInteger('gatunek_id');
+            $table->foreign('gatunek_id')
             ->references('id')
             ->on('gatunek')
             ->onDelete('no action');
-            $table->unsignedBigInteger('id_rezyser');
-            $table->foreign('id_rezyser')
+            $table->unsignedBigInteger('gwiazda_id');
+            $table->foreign('gwiazda_id')
             ->references('id')
             ->on('gwiazda')
             ->onDelete('no action');
             $table->string('tytul');
             $table->date('data_premiery');
             $table->text('opis');
+            $table->boolean('czyokladka');
             $table->timestamps();
             $table->softDeletes();
         });

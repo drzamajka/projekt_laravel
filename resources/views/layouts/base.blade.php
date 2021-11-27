@@ -25,6 +25,8 @@
         {{ $slot }}
     </body>
     {{-- Globalne skrypty JS --}}
+    <script src="{{ asset('js/manifest.js') }}"></script>
+    <script src="{{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- Lokalne skrypty JS --}}
     {{ $scripts }} 

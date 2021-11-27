@@ -26,14 +26,32 @@
         <x-nav-link :href="route('log-viewer::dashboard')">
             {{ __('translations.dashboard.log-viewer') }}
         </x-nav-link>
-      </li>             
-      @endcan        
-      <li class="nav-item">
-        <x-nav-link class="disabled" aria-disabled="true">
-          {{ __('translations.dashboard.disabled') }}
-        </x-nav-link>
       </li>
+      @endcan     
+      @can('gatunki-index') 
+      <li class="nav-item">
+        <x-nav-link :href="route('gatunki.index')" :active="request()->routeIs('gatunki.index')">
+            {{ __('translations.gatunki.title') }}
+        </x-nav-link>
+      </li>           
+      @endcan
+      @can('gwiazdy-index') 
+      <li class="nav-item">
+        <x-nav-link :href="route('gwiazdy.index')"  :active="request()->routeIs('gwiazdy.index')">
+            {{ __('translations.gwiazdy.title') }}
+        </x-nav-link>
+      </li>           
+      @endcan         
+      @can('gwiazdy-index') 
+      <li class="nav-item">
+        <x-nav-link :href="route('filmy.index')"  :active="request()->routeIs('filmy.index')">
+            {{ __('translations.filmy.title') }}
+        </x-nav-link>
+      </li>           
+      @endcan  
     </ul>
+    @if (Route::has('login'))
+    @auth
     <div class="navbar-nav dropdown">
       <a href="#" class="nav-link dropdown-toggle" id="profile" 
           data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,7 +64,24 @@
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="{{ route('logout') }}">{{ __('translations.dashboard.log-out') }}</a></li>
       </ul>
-      </div>        
+      </div>
+      @else
+      <div class="navbar-nav dropdown">
+        <li class="nav-item">
+          <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+              {{ __('auth.buttons.login') }}
+          </x-nav-link>
+        </li> 
+          @if (Route::has('register'))
+          <li class="nav-item">
+            <x-nav-link :href="route('register')"  :active="request()->routeIs('register')">
+                {{ __('auth.buttons.register') }}
+            </x-nav-link>
+          </li> 
+          @endif
+      </div>    
+      @endauth
+      @endif        
     </div>
   </div>
 </nav>
