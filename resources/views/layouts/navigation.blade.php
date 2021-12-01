@@ -10,24 +10,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
-    <ul class="navbar-nav me-auto mb-2 mb-md-0">      
-      <li class="nav-item">
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-          {{ __('translations.dashboard.dashboard') }}
-        </x-nav-link>
-      </li>            
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">   
+      @auth 
+        <li class="nav-item">
+          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            {{ __('translations.dashboard.dashboard') }}
+          </x-nav-link>
+        </li>   
+      @endauth         
       <li class="nav-item">
         <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
           {{ __('translations.dashboard.home') }}
         </x-nav-link>
-      </li>   
-      @can('log-viewer') 
-      <li class="nav-item">
-        <x-nav-link :href="route('log-viewer::dashboard')">
-            {{ __('translations.dashboard.log-viewer') }}
-        </x-nav-link>
-      </li>
-      @endcan     
+      </li>       
       @can('gatunki-index') 
       <li class="nav-item">
         <x-nav-link :href="route('gatunki.index')" :active="request()->routeIs('gatunki.index')">
@@ -42,13 +37,20 @@
         </x-nav-link>
       </li>           
       @endcan         
-      @can('gwiazdy-index') 
+      <!-- @can('filmy-index') 
       <li class="nav-item">
         <x-nav-link :href="route('filmy.index')"  :active="request()->routeIs('filmy.index')">
             {{ __('translations.filmy.title') }}
         </x-nav-link>
       </li>           
-      @endcan  
+      @endcan   -->
+      @can('log-viewer') 
+      <li class="nav-item">
+        <x-nav-link :href="route('log-viewer::dashboard')">
+            {{ __('translations.dashboard.log-viewer') }}
+        </x-nav-link>
+      </li>
+      @endcan 
     </ul>
     @if (Route::has('login'))
     @auth

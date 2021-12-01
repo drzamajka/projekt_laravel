@@ -13,12 +13,14 @@
         <thead>
           <tr>
             <th>#</th>
+            <th>{{ __('translations.filmy.attribute.cover' ) }}</th>
             <th>{{ __('translations.filmy.attribute.type') }}</th>
             <th>{{ __('translations.filmy.attribute.director') }}</th>
             <th>{{ __('translations.filmy.attribute.title' ) }}</th>
             <th>{{ __('translations.filmy.attribute.release' ) }}</th>
+            <th>{{ __('translations.filmy.attribute.stars' ) }}</th>
             <th>{{ __('translations.filmy.attribute.descryption' ) }}</th>
-            <th>{{ __('translations.filmy.attribute.cover' ) }}</th>
+            <th>{{ __('translations.filmy.attribute.coverif' ) }}</th>
             <th>{{ __('translations.attribute.created_at' ) }}</th>
             <th>{{ __('translations.attribute.updated_at' ) }}</th>
             <th>{{ __('translations.attribute.deleted_at' ) }}</th>

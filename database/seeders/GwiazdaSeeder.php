@@ -14,6 +14,6 @@ class GwiazdaSeeder extends Seeder
      */
     public function run()
     {
-        Gwiazda::factory()->count(50)->create();
+        Gwiazda::factory()->count(200)->create();
     }
 }

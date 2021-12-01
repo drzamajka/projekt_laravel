@@ -13,15 +13,15 @@ class CreateGwiazdyWFilmieTable extends Migration
      */
     public function up()
     {
-        Schema::create('gwiazdy_w_filmie', function (Blueprint $table) {
+        Schema::create('film_gwiazda', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_filmu');
-            $table->foreign('id_filmu')
+            $table->unsignedBigInteger('film_id');
+            $table->foreign('film_id')
             ->references('id')
             ->on('film')
             ->onDelete('no action');
-            $table->unsignedBigInteger('id_gwiazdy');
-            $table->foreign('id_gwiazdy')
+            $table->unsignedBigInteger('gwiazda_id');
+            $table->foreign('gwiazda_id')
             ->references('id')
             ->on('gwiazda')
             ->onDelete('no action');
@@ -38,6 +38,6 @@ class CreateGwiazdyWFilmieTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gwiazdy_w_filmie');
+        Schema::dropIfExists('film_gwiazda');
     }
 }

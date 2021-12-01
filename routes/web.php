@@ -24,8 +24,10 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
- //Route::get('/', [GwiazdaController::class, 'index'] )->name('home');
- Route::get('/', function () { return view('dashboard'); } )->name('home');
+ Route::get('/', [FilmController::class, 'index'] )->name('home');
+ Route::post('filmy/datatable', [FilmController::class, 'dataTable'])
+            ->name('datatable');
+ //Route::get('/', function () { return view('dashboard'); } )->name('home');
 
 
 Route::get('/dashboard', function () {
@@ -39,6 +41,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('', [GatunekController::class, 'index'])
             ->name('index')
             ->middleware(['permission:gatunki-index']);
+        Route::post('/datatable', [GatunekController::class, 'dataTable'])
+            ->name('datatable')
+            ->middleware(['permission:gatunki-index']);     
     });
 
     Route::name('gwiazdy.')->prefix('gwiazdy')->group(function () {
@@ -46,16 +51,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('', [GwiazdaController::class, 'index'])
             ->name('index')
             ->middleware(['permission:gwiazdy-index']);
+        Route::post('/datatable', [GwiazdaController::class, 'dataTable'])
+            ->name('datatable')
+            ->middleware(['permission:gatunki-index']);  
     });
 
     Route::name('filmy.')->prefix('filmy')->group(function () {
         // lista wszystkich
         Route::get('', [FilmController::class, 'index'])
             ->name('index')
-            ->middleware(['permission:gwiazdy-index']);
-        Route::post('/datatable', [FilmController::class, 'dataTable'])
-            ->name('datatable')
-            ->middleware(['permission:gwiazdy-index']);    
+            ->middleware(['permission:filmy-index']);
+        // Route::post('/datatable', [FilmController::class, 'dataTable'])
+        //     ->name('datatable')
+        //     ->middleware(['permission:filmy-index']);    
     });
 
 });

@@ -34,7 +34,8 @@ class Film extends Model
 
     public function gwiazdy_w_filmie()
     {
-        return $this->hasMany(Gwiazda::class)
+        return $this->belongsToMany(Gwiazda::class)
+        ->orderBy('nazwisko_gwiazdy')
         ->withPivot('rola');
     }
 

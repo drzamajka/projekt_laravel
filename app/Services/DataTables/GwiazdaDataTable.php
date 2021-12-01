@@ -3,14 +3,14 @@
 namespace App\Services\DataTables;
 
 use Carbon\Carbon;
-use App\Models\Gatunek;
+use App\Models\Gwiazda;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\View\ComponentAttributeBag;
 
 
-class GatunekDataTable extends DataTable
+class GwiazdaDataTable extends DataTable
 {
 
     const SQL_RAW_FILTER = [
@@ -60,7 +60,7 @@ class GatunekDataTable extends DataTable
 
     public function query()
     {
-        $rows = Gatunek::withTrashed();
+        $rows = Gwiazda::withTrashed();
         return $this->applyScopes($rows);
     }
 }

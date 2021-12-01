@@ -76,7 +76,9 @@ return [
             'title' => 'Tytół',
             'release' => 'Data premiery',
             'descryption' => 'Opis',
-            'cover' => 'Czy okładka',
+            'coverif' => 'Czy okładka',
+            'cover' => 'Okładka',
+            'stars' => 'Gwiazdy',
         ],
         'flashes' => [
             'success' => [

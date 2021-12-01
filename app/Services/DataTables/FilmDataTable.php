@@ -23,8 +23,26 @@ class FilmDataTable extends DataTable
     {
         $datatable = DataTables::eloquent($this->query())
             ->setRowId('id')
+            ->addColumn('okladka', function ($data) {
+                if($data->czyokladka)
+                    return  '<img src="images/covers/'.$data->id.'.jpg" alt="Domyślna okładka" width="50" height="60">';
+                else    
+                    return  '<img src="images/covers/0.jpg" alt="Domyślna okładka" width="50" height="60">';
+            })
             ->addColumn('rezyser', function ($data) {
                 return  $data->gwiazda->imie_gwiazdy.' '.$data->gwiazda->nazwisko_gwiazdy;
+            })
+            ->editColumn('gwiazdy_w_filmie', function ($data) {
+                $gwiazdy_w_filmie = $data->gwiazdy_w_filmie;
+                foreach ($gwiazdy_w_filmie as &$gwiazda) {
+                    $manufacturersAsString = '<span  class="badge rounded-pill bg-dark">'
+                        . htmlspecialchars($gwiazda->imie_gwiazdy)
+                        . ' '
+                        . htmlspecialchars($gwiazda->nazwisko_gwiazdy)
+                        .'</span >';
+                        $gwiazda->imie_gwiazdy = $manufacturersAsString;
+                }
+                return json_decode($gwiazdy_w_filmie);
             })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at
@@ -41,33 +59,39 @@ class FilmDataTable extends DataTable
                     ? with(new Carbon($row->deleted_at))->format('Y-m-d H:i')
                     : '';
             })
-            ->filterColumn('created_at', function ($query, $keyword) {
-                $query->whereRaw(
-                    self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
-            })
-            ->filterColumn('updated_at', function ($query, $keyword) {
-                $query->whereRaw(
-                    self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
-            })
-            ->filterColumn('deleted_at', function ($query, $keyword) {
-                $query->whereRaw(
-                    self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
-            })
-            ->filterColumn('rezyser', function ($query, $keyword) {
+            ->filter(function ($query) {
+                $search = request('search');
+                $keyword = $search['value'];
+                if (strlen($keyword) === 0) {
+                    return;
+                }
+                $keyword = "%$keyword%";
+                $query->where('film.id', 'like', $keyword);
+                $query->orWhere('film.tytul', 'like', $keyword);
+                $query->orWhere('film.opis', 'like', $keyword);
                 $query->orWhereHas('gwiazda', function ($query) use ($keyword) {
-                        return $query->where('gwiazda.imie_gwiazdy', 'like', ["%$keyword%"]);
-                    });
-                $query->orWhereHas('gwiazda', function ($query) use ($keyword) {
-                        return $query->where('gwiazda.nazwisko_gwiazdy', 'like', ["%$keyword%"]);
-                    });       
+                    $sql = "CONCAT(gwiazda.imie_gwiazdy,' ',gwiazda.nazwisko_gwiazdy)  like ?";
+                    return  $query->whereRaw($sql, ["%{$keyword}%"]);
+                });
+                $query->orWhereHas('gatunek', function ($query) use ($keyword) {
+                    return $query->where('gatunek.nazwa_gatunku', 'like', $keyword);
+                });
+                $query->orWhereHas('gwiazdy_w_filmie', function ($query) use ($keyword) {
+                    $sql = "CONCAT(gwiazda.imie_gwiazdy,' ',gwiazda.nazwisko_gwiazdy)  like ?";
+                    return  $query->whereRaw($sql, ["%{$keyword}%"]);
+                });
+                $query->orWhereRaw(self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
+                $query->orWhereRaw(self::SQL_RAW_FILTER['updated_at'] . ' LIKE ?', ["%$keyword%"]);
+                $query->orWhereRaw(self::SQL_RAW_FILTER['deleted_at'] . ' LIKE ?', ["%$keyword%"]);
             })
+            
             ->orderColumn('rezyser', function ($query, $order) {
                 $query->orderBy('gwiazda_id', $order);
             })
             ->addColumn('action', function ($row) {
                 
             })
-            ->rawColumns(['action']);
+            ->rawColumns(['okladka','action']);
 
         return $datatable->make(true);
     }
@@ -75,7 +99,7 @@ class FilmDataTable extends DataTable
     public function query()
     {
         $rows = Film::withTrashed()
-            ->with('gatunek', 'gwiazda')->select('film.*');
+            ->with('gatunek', 'gwiazda', 'gwiazdy_w_filmie')->select('film.*');
         return $this->applyScopes($rows);
     }
 }
