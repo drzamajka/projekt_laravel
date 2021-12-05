@@ -25,8 +25,12 @@ Route::get('/home', function () {
 })->name('home');
 
  Route::get('/', [FilmController::class, 'index'] )->name('home');
- Route::post('filmy/datatable', [FilmController::class, 'dataTable'])
-            ->name('datatable');
+ Route::name('filmy.')->prefix('filmy')->group(function () {
+    Route::post('/datatable', [FilmController::class, 'dataTable'])
+                ->name('datatable');
+    Route::get('/film&{id}', [FilmController::class, 'film'])
+                ->name('film');            
+ });           
  //Route::get('/', function () { return view('dashboard'); } )->name('home');
 
 

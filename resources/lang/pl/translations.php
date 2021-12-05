@@ -9,7 +9,8 @@ return [
         'log-viewer' => 'Logi',
         'profile' => 'Profil',
         'settings' => 'Ustawienia',
-        'log-out' => 'Wyloguj'
+        'log-out' => 'Wyloguj',
+        'return' => 'Powrót'
     ],
     'gatunki' => [
         'title' => 'Gatunki',
@@ -79,6 +80,8 @@ return [
             'coverif' => 'Czy okładka',
             'cover' => 'Okładka',
             'stars' => 'Gwiazdy',
+            'stars-as' => 'jako',
+            'stars-empty' => 'Brak wgiazd na liscie',
         ],
         'flashes' => [
             'success' => [
