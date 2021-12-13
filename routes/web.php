@@ -29,7 +29,10 @@ Route::get('/home', function () {
     Route::post('/datatable', [FilmController::class, 'dataTable'])
                 ->name('datatable');
     Route::get('/film&{id}', [FilmController::class, 'film'])
-                ->name('film');            
+                ->name('film');    
+    Route::get('create', [GatunekController::class, 'create'])
+            ->name('create')
+            ->middleware(['permission:gatunki-store']);         
  });           
  //Route::get('/', function () { return view('dashboard'); } )->name('home');
 
@@ -47,7 +50,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware(['permission:gatunki-index']);
         Route::post('/datatable', [GatunekController::class, 'dataTable'])
             ->name('datatable')
-            ->middleware(['permission:gatunki-index']);     
+            ->middleware(['permission:gatunki-index']);
+        // dodawanie wpisu   
+        Route::get('create', [GatunekController::class, 'create'])
+            ->name('create')
+            ->middleware(['permission:gatunki-store']);  
+        Route::post('', [GatunekController::class, 'store'])
+            ->name('store')
+            ->middleware(['permission:gatunki-store']);    
     });
 
     Route::name('gwiazdy.')->prefix('gwiazdy')->group(function () {
@@ -57,7 +67,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware(['permission:gwiazdy-index']);
         Route::post('/datatable', [GwiazdaController::class, 'dataTable'])
             ->name('datatable')
-            ->middleware(['permission:gatunki-index']);  
+            ->middleware(['permission:gwiazdy-index']);
+        // dodawanie wpisu   
+        Route::get('create', [GwiazdaController::class, 'create'])
+            ->name('create')
+            ->middleware(['permission:gwiazdy-store']);  
+        Route::post('', [GwiazdaController::class, 'store'])
+            ->name('store')
+            ->middleware(['permission:gwiazdy-store']);    
     });
 
     Route::name('filmy.')->prefix('filmy')->group(function () {
@@ -65,9 +82,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('', [FilmController::class, 'index'])
             ->name('index')
             ->middleware(['permission:filmy-index']);
-        // Route::post('/datatable', [FilmController::class, 'dataTable'])
-        //     ->name('datatable')
-        //     ->middleware(['permission:filmy-index']);    
+        // dodawanie wpisu   
+        Route::get('create', [FilmController::class, 'create'])
+            ->name('create')
+            ->middleware(['permission:filmy-index']);  
+        Route::post('', [FilmController::class, 'store'])
+            ->name('store')
+            ->middleware(['permission:filmy-index']);  
     });
 
 });

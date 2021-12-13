@@ -9,8 +9,17 @@ return [
         'log-viewer' => 'Logi',
         'profile' => 'Profil',
         'settings' => 'Ustawienia',
-        'log-out' => 'Wyloguj',
-        'return' => 'Powrót'
+        'log-out' => 'Wyloguj'
+    ],
+    'buttons' => [
+        'cancel' => 'Anuluj',
+        'store' => 'Dodaj',
+        'update' => 'Aktualizuj',
+        'yes' => 'Tak',
+        'no' => 'Nie',
+        'return' => 'Powrót',
+        'store-star' => 'Dodaj gwiazde',
+        'delete-star' => 'Usuń gwiazde'
     ],
     'gatunki' => [
         'title' => 'Gatunki',
@@ -23,12 +32,12 @@ return [
             'restore-question' => 'Czy anulować usunięcie gatunku :name?'
         ],
         'attribute' => [
-            'name' => 'nazwa',
+            'name' => 'nazwa gatunku',
             'count_filmy' => 'ilość filmów'
         ],
         'flashes' => [
             'success' => [
-                'stored' => 'Dodano kategorię :name',
+                'stored' => 'Dodano gatunek :name',
                 'updated' => 'Zaktualizowano kategorię :name',
                 'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
                 'destroy' => 'Kategoria :name została usunięty',
@@ -53,7 +62,7 @@ return [
         ],
         'flashes' => [
             'success' => [
-                'stored' => 'Dodano kategorię :name',
+                'stored' => 'Dodano gwiazde :name :lastname',
                 'updated' => 'Zaktualizowano kategorię :name',
                 'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
                 'destroy' => 'Kategoria :name została usunięty',
@@ -64,12 +73,12 @@ return [
     'filmy' => [
         'title' => 'Filmy',
         'labels' => [
-            'create' => 'Dodanie nowej gwiazdy',
-            'edit' => 'Edycja danych gatunku',
-            'destroy' => 'Usunięcie gatunku',
-            'destroy-question' => 'Czy na pewno usunąć gatunek :name?',
-            'restore' => 'Anulowanie usunięcia gatunku',
-            'restore-question' => 'Czy anulować usunięcie gatunku :name?'
+            'create' => 'Dodanie nowego filmu',
+            'edit' => 'Edycja danych filmu',
+            'destroy' => 'Usunięcie filmu',
+            'destroy-question' => 'Czy na pewno usunąć filmu :name?',
+            'restore' => 'Anulowanie usunięcia filmu',
+            'restore-question' => 'Czy anulować usunięcie filmu :name?'
         ],
         'attribute' => [
             'type' => 'Gatunek',
@@ -79,13 +88,14 @@ return [
             'descryption' => 'Opis',
             'coverif' => 'Czy okładka',
             'cover' => 'Okładka',
-            'stars' => 'Gwiazdy',
+            'stars' => 'Gwiazdy w Filmie',
+            'star' => 'Gwiazda nr. :nr',
             'stars-as' => 'jako',
-            'stars-empty' => 'Brak wgiazd na liscie',
+            'stars-empty' => 'Brak giazd na liscie',
         ],
         'flashes' => [
             'success' => [
-                'stored' => 'Dodano kategorię :name',
+                'stored' => 'Dodano film o tytule :name',
                 'updated' => 'Zaktualizowano kategorię :name',
                 'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
                 'destroy' => 'Kategoria :name została usunięty',

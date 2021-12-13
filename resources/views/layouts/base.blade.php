@@ -15,9 +15,9 @@
                 locale: "{{ config('app.locale') }}",
                 host: "{{ request()->getSchemeAndHttpHost() }}"
             };            
-        </script>        
+        </script>    
         {{-- Globalne style CSS --}}
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">       
         {{-- Lokalne style CSS --}}
         {{ $styles }}
     </head>

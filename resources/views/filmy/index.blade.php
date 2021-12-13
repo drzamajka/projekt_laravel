@@ -4,7 +4,14 @@
     </x-slot>
     <x-slot name="scripts">
         <script src="{{ asset('js/filmy.js') }}"></script>
-    </x-slot>      
+    </x-slot>  
+    <div class="d-flex flex-row-reverse bd-highlight">
+          @auth 
+          <a class="btn btn-secondary" data-toggle="collapse" href="{{ route('filmy.create') }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+            {{ __('translations.buttons.store') }}
+          </a>
+          @endauth 
+    </div>    
     <div class="container">
       <h1 class="display-6">{{ __('translations.filmy.title') }}</h1>
       <div class="d-flex flex-row-reverse mb-4">

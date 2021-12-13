@@ -8,7 +8,7 @@
     <div class="container">
         <div class="d-flex flex-row-reverse bd-highlight">
           <a class="btn btn-secondary" data-toggle="collapse" href="{{ URL::previous() }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-            {{ __('translations.dashboard.return') }}
+            {{ __('translations.buttons.return') }}
           </a>
         </div>
         <p class="display-5 d-inline">{{$film->tytul}}</p>
@@ -19,6 +19,7 @@
           <div style="width: 180px;" >
             @if($film->czyokladka == 1)
               <img src="/images/covers/{{$film->id}}.jpg" alt="Domyślna okładka" width="180" height="225">
+              <script>toastr.error('działam')</script>
             @else  
               <img src="/images/covers/0.jpg" alt="Domyślna okładka" width="180" height="225">
             @endif
@@ -44,9 +45,9 @@
             </div>
         </div>
         </div>
-          <p>{{ __('translations.attribute.created_at' ) }}: {{$gwiazda->created_at}}</p>
-          <p>{{ __('translations.attribute.updated_at' ) }}: {{$gwiazda->updated_at}}</p>
-          <p>{{ __('translations.attribute.deleted_at' ) }}: {{$gwiazda->deleted_at}}</p>
+          <p>{{ __('translations.attribute.created_at' ) }}: {{$film->created_at}}</p>
+          <p>{{ __('translations.attribute.updated_at' ) }}: {{$film->updated_at}}</p>
+          <p>{{ __('translations.attribute.deleted_at' ) }}: {{$film->deleted_at}}</p>
     </div>
 
 </x-app-layout>
