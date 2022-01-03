@@ -51,12 +51,34 @@ class GatunekDataTable extends DataTable
                     self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
             })
             ->addColumn('action', function ($row) {
-                
+                return $this->getActionButtons($row);
             })
             ->rawColumns(['action']);
 
         return $datatable->make(true);
     }
+    private function getActionButtons(Gatunek $gatunek): string
+    {
+        $buttons = '<div class="btn-group" role="group" aria-label="action buttons">';
+        $buttons .= $this->getEditButton($gatunek);
+
+        $buttons .= '</div>';
+        return $buttons;
+    }
+
+    private function getEditButton(Gatunek $gatunek): string
+    {
+        if (isset($gatunek->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gatunki-store')) {
+            return '';
+        }
+        return '<a class="btn btn-secondary" href="'.route('gatunki.edit', $gatunek).'"
+        title="'.__('translations.gatunki.labels.edit').'" >
+        <i class="bi-pencil"></i></a>';
+    }
+
 
     public function query()
     {

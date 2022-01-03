@@ -35,4 +35,30 @@ class GwiazdaController extends Controller
                 'lastname' => $gwiazda->nazwisko_gwiazdy
             ]));
     }
+
+    public function edit(Gwiazda $gwiazda )
+    {
+        $edit = true;
+        return view(
+            'gwiazdy.create',
+            compact('gwiazda', 'edit')
+        );
+    }
+
+    public function update(GwiazdaRequest $request, Gwiazda $gwiazda)
+    {
+        $gwiazda->fill($request->all())->save();
+        return redirect()->route('gwiazdy.index')
+            ->with(
+                'success',
+                __(
+                    $gwiazda->wasChanged()
+                        ? 'translations.gwiazdy.flashes.success.updated'
+                        : 'translations.gwiazdy.flashes.success.nothing-changed',
+                    [
+                        'name' => $gwiazda->imie_gwiazdy.' '.$gwiazda->nazwisko_gwiazdy
+                    ]
+                )
+            );
+    }
 }

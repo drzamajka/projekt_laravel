@@ -31,7 +31,6 @@
           @csrf
 
           
-
           <!-- gatunek -->
           <div class="row mb-3">
             <label for="film-type" class="col-sm-2 col-form-label">
@@ -45,9 +44,15 @@
                 <option></option>
                 @foreach ($types as $type)
                   <option value="{{ $type->id }}"
-                  @if( old('gatunek_id', null) == $type->id ) 
-                  selected="selected"
-                  @endif
+                  @if (isset($film))
+                    @if( $film->gatunek_id == $type->id ) 
+                      selected="selected"
+                    @endif
+                  @else
+                    @if( old('gatunek_id', null) == $type->id ) 
+                    selected="selected"
+                    @endif
+                  @endif  
                   >{{ $type->nazwa_gatunku  }}</option>
                 @endforeach
               </select>
@@ -71,8 +76,14 @@
                 <option></option>
                 @foreach ($directors as $director)
                   <option value="{{ $director->id }}"
-                  @if( old('gwiazda_id', null) == $director->id ) 
-                  selected="selected"
+                  @if (isset($film))
+                    @if( $film->gwiazda_id == $director->id ) 
+                      selected="selected"
+                    @endif
+                  @else
+                    @if( old('gwiazda_id', null) == $director->id ) 
+                      selected="selected"
+                    @endif
                   @endif>
                   {{ $director->imie_gwiazdy  }} {{ $director->nazwisko_gwiazdy  }}</option>
                 @endforeach
@@ -91,7 +102,7 @@
             </label>
             <div class="col-sm-10">
               <input type="text" class="form-control @error('tytul')is-invalid @enderror" name="tytul" 
-                value="{{ old('tytul') }}" id="film-title">
+                value="@if (isset($film)){{ $film->tytul }}@else{{ old('tytul') }}@endif" id="film-title">
               @error('tytul')
               <span class="invalid-feedback" role="alert">
                 {{ $message }}
@@ -106,7 +117,7 @@
             </label>
             <div class="col-sm-10">
               <input type="date" class="form-control @error('data_premiery')is-invalid @enderror" name="data_premiery"
-                id="film-release" value="{{ old('data_premiery') }}">
+                id="film-release" value="@if (isset($film)){{ $film->data_premiery }}@else{{ old('data_premiery') }}@endif">
               @error('data_premiery')
               <span class="invalid-feedback" role="alert">
                 {{ $message }}
@@ -151,24 +162,42 @@
 
             <!-- STYLE="display: none !important"  -->
             <div id="star_nr{{ $i }}" 
-            @if( old('iloscgwiazd', null) <= $i ) 
-            STYLE="display: none !important" 
-            @endif
+              @if (isset($film))
+                @if( count($film->gwiazdy_w_filmie)+1 <= $i ) 
+                  STYLE="display: none !important" 
+                @endif
+              @else
+                @if( old('iloscgwiazd', null) <= $i ) 
+                  STYLE="display: none !important" 
+                @endif
+              @endif
             class="col-lg-12 row d-flex justify-content-between mx-0 p-0">
               <div class="col-lg-5 row m-0 p-0 mb-3">
                 <label for="film-star-id[{{ $i }}]" class="col-auto my-auto">{{ __('translations.filmy.attribute.star', [ 'nr' => $i ]) }}</label>
                 <select class="form-select @error('aktorzy_id.'.($i-1))is-invalid @enderror col" name="aktorzy_id[]"
                   id="film-star-id[{{ $i }}]" 
-                  @if( old('iloscgwiazd', null) <= $i ) 
-                  disabled
+                  @if (isset($film))
+                    @if( count($film->gwiazdy_w_filmie)+1 <= $i ) 
+                      disabled 
+                    @endif
+                  @else
+                    @if( old('iloscgwiazd', null) <= $i ) 
+                      disabled
+                    @endif
                   @endif
                   data-placeholder="{{ __('translations.labels.select2-placeholder') }}"
                   aria-describedby="film-star-id[{{ $i }}]-error">
                   <option></option>
                   @foreach ($directors as $director)
                     <option value="{{ $director->id }}"
-                    @if( old('aktorzy_id.'.($i-1), null) == $director->id ) 
-                    selected="selected"
+                    @if (isset($film) && $i <= count($film->gwiazdy_w_filmie))
+                      @if( $film->gwiazdy_w_filmie[$i-1]->pivot->gwiazda_id == $director->id ) 
+                        selected="selected"
+                      @endif
+                    @else
+                      @if( old('aktorzy_id.'.($i-1), null) == $director->id ) 
+                        selected="selected"
+                      @endif
                     @endif>
                     {{ $director->imie_gwiazdy  }} {{ $director->nazwisko_gwiazdy  }}</option>
                   @endforeach
@@ -182,11 +211,22 @@
               <div class="col-lg-5 row m-0 p-0 mb-3">
                 <label  class="col-auto my-auto" for="film-star-role[{{ $i }}]">{{ __('translations.filmy.attribute.stars-as') }}</label>
                 <input type="text" 
-                @if( old('iloscgwiazd', null) <= $i ) 
-                disabled
-                @endif
-                class="form-control col @error('aktorzy_role.'.($i-1))is-invalid @enderror" name="aktorzy_role[]" 
-                value="{{ old('aktorzy_role.'.($i-1)) }}" id="film-star-role[{{ $i }}]">
+                id="film-star-role[{{ $i }}]" 
+                  @if (isset($film))
+                    @if( count($film->gwiazdy_w_filmie)+1 <= $i ) 
+                      disabled 
+                    @else
+                      value="{{ $film->gwiazdy_w_filmie[$i-1]->pivot->rola }}"  
+                    @endif
+                  @else
+                    @if( old('iloscgwiazd', null) <= $i ) 
+                      disabled
+                    @else
+                      value="{{ old('aktorzy_role.'.($i-1)) }}"  
+                    @endif
+                  @endif
+                class="form-control col @error('aktorzy_role.'.($i-1))is-invalid @enderror" name="aktorzy_role[]"              
+                id="film-star-role[{{ $i }}]">
                 @error('aktorzy_role.'.($i-1))
                   <span id="film-star-role[{{ $i }}]-error" class="invalid-feedback" role="alert">
                    {{ $errors->first('aktorzy_role.'.($i-1)) }}
@@ -203,7 +243,8 @@
             </div>
             <!-- STYLE="display: none !important" -->
             <input type="number" name="iloscgwiazd" min="1" max="6"  STYLE="display: none !important"
-            value="{{ old('iloscgwiazd', '1') }}" id="iloscgwiazd">
+            @if (isset($film))value="{{ count($film->gwiazdy_w_filmie)+1 }}"@elsevalue="{{ old('iloscgwiazd') }}"@endif" id="iloscgwiazd"
+            >
             </div>
           </div>
 
@@ -212,7 +253,7 @@
 
           <div class="d-flex justify-content-end mb-3 ">
             <div class="btn-group" role="group" aria-label="Cancel or submit form">
-              <a href="{{ route('filmy.index') }}" type="submit" class="btn btn-secondary">
+              <a href="{{ URL::previous() }}" type="submit" class="btn btn-secondary">
                 {{ __('translations.buttons.cancel') }}
               </a>
               <button type="submit" class="btn btn-primary">

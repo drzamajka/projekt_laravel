@@ -20,10 +20,10 @@ class FilmRequest extends FormRequest
         if($this->iloscgwiazd>1){
             //dd($this->request);
             $rules = [
-                'gatunek_id' => ['required', 'integer', 'exists:gatunek,id'],
+                'gatunek_id' => ['required', 'integer', 'sometimes' , 'exists:gatunek,id'],
                 'gwiazda_id' => ['required', 'integer', 'exists:gwiazda,id'],
                 'tytul' => ['required', 'string', 'max:255'],
-                'data_premiery' => ['required', 'date', 'max:255'],
+                'data_premiery' => ['required', 'date'],
                 'opis' => ['required', 'string', 'max:255']
             ];
             $rules += ['aktorzy_id' => ['required', 'array', 'min:1']];
@@ -66,8 +66,8 @@ class FilmRequest extends FormRequest
             'tytul' => __('translations.filmy.attribute.title'),
             'data_premiery' => __('translations.filmy.attribute.release'),
             'opis' => __('translations.filmy.attribute.descryption'),
-            'aktorzy_id.*' => 'id',
-            'aktorzy_role.*' => 'role',
+            'aktorzy_id.*' => __('translations.filmy.attribute.star'),
+            'aktorzy_role.*' => __('translations.filmy.attribute.stars-as'),
         ];
     }
 }

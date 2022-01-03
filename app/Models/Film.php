@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Gatunek;
 use App\Models\Gwiazda;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class Film extends Model
         'tytul',
         'data_premiery',
         'opis',
+        'users_id',
         'czyokladka',
     ];
 
@@ -30,6 +32,11 @@ class Film extends Model
     public function gwiazda()
     {
         return $this->belongsTo(Gwiazda::class);
+    }
+
+    public function wlasciciel()
+    {
+        return $this->belongsTo(User::class, 'users_id');
     }
 
     public function gwiazdy_w_filmie()

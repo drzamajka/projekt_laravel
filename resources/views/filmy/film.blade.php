@@ -7,9 +7,15 @@
     </x-slot>      
     <div class="container">
         <div class="d-flex flex-row-reverse bd-highlight">
-          <a class="btn btn-secondary" data-toggle="collapse" href="{{ URL::previous() }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-            {{ __('translations.buttons.return') }}
-          </a>
+          <div class="btn-group" role="group" aria-label="Cancel or submit form">
+            @can('update',$film) 
+              <a class="btn btn-info" href="{{ route('filmy.edit', $film) }}" title="'.__('translations.film.labels.edit').'" >
+              <i class="bi-pencil"></i></a> 
+            @endcan 
+            <a class="btn btn-secondary" data-toggle="collapse" href="{{ route('home') }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+              {{ __('translations.buttons.return') }}
+            </a>
+          </div>
         </div>
         <p class="display-5 d-inline">{{$film->tytul}}</p>
         <p class="heading 6 mx-3 d-inline">{{date('Y', strtotime($film->data_premiery))}}</p>
@@ -19,7 +25,6 @@
           <div style="width: 180px;" >
             @if($film->czyokladka == 1)
               <img src="/images/covers/{{$film->id}}.jpg" alt="Domyślna okładka" width="180" height="225">
-              <script>toastr.error('działam')</script>
             @else  
               <img src="/images/covers/0.jpg" alt="Domyślna okładka" width="180" height="225">
             @endif

@@ -29,7 +29,10 @@ Route::get('/home', function () {
     Route::post('/datatable', [FilmController::class, 'dataTable'])
                 ->name('datatable');
     Route::get('/film&{id}', [FilmController::class, 'film'])
-                ->name('film');    
+                ->name('film');
+    Route::get('{film}', [FilmController::class, 'film'])
+        ->where('film', '[0-9]+')
+        ->name('index');                
     Route::get('create', [GatunekController::class, 'create'])
             ->name('create')
             ->middleware(['permission:gatunki-store']);         
@@ -57,7 +60,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware(['permission:gatunki-store']);  
         Route::post('', [GatunekController::class, 'store'])
             ->name('store')
-            ->middleware(['permission:gatunki-store']);    
+            ->middleware(['permission:gatunki-store']);  
+        // edycja wpisu
+        Route::get('{gatunek}/edit', [GatunekController::class, 'edit'])
+            ->where('gatunek', '[0-9]+')
+            ->name('edit')
+            ->middleware(['permission:gatunki-store']);
+        Route::patch('{gatunek}', [GatunekController::class, 'update'])
+            ->where('gatunek', '[0-9]+')
+            ->name('update')
+            ->middleware(['permission:gatunki-store']);      
     });
 
     Route::name('gwiazdy.')->prefix('gwiazdy')->group(function () {
@@ -74,7 +86,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware(['permission:gwiazdy-store']);  
         Route::post('', [GwiazdaController::class, 'store'])
             ->name('store')
-            ->middleware(['permission:gwiazdy-store']);    
+            ->middleware(['permission:gwiazdy-store']);   
+        // edycja wpisu
+        Route::get('{gwiazda}/edit', [GwiazdaController::class, 'edit'])
+            ->where('gwiazda', '[0-9]+')
+            ->name('edit')
+            ->middleware(['permission:gwiazdy-store']);
+        Route::patch('{gwiazda}', [GwiazdaController::class, 'update'])
+            ->where('gwiazda', '[0-9]+')
+            ->name('update')
+            ->middleware(['permission:gwiazdy-store']);     
     });
 
     Route::name('filmy.')->prefix('filmy')->group(function () {
@@ -88,7 +109,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->middleware(['permission:filmy-index']);  
         Route::post('', [FilmController::class, 'store'])
             ->name('store')
-            ->middleware(['permission:filmy-index']);  
+            ->middleware(['permission:filmy-store']);  
+        // edycja wpisu
+        Route::get('{film}/edit', [FilmController::class, 'edit'])
+            ->where('film', '[0-9]+')
+            ->name('edit')
+            ->middleware(['permission:filmy-store']);
+        Route::patch('{film}', [FilmController::class, 'update'])
+            ->where('film', '[0-9]+')
+            ->name('update')
+            ->middleware(['permission:filmy-store']);        
     });
 
 });

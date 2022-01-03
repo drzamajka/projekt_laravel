@@ -21,6 +21,7 @@ class FilmFactory extends Factory
             'tytul' => $this->faker->word(),
             'data_premiery' => $this->faker->dateTime(),
             'opis' => $this->faker->text(150),
+            'users_id' => NULL,
             'czyokladka' => False,
         ];
     }

@@ -19,7 +19,7 @@ class GatunekRequest extends FormRequest
                 'required', 'string', 'max:100',
                 // kolumna name ma ustawiony unique na bazie i możliwy jest 
                 // zapis bez podawania nazwy kolumny w ignore
-                Rule::unique('gatunek')->ignore($this->nazwa_gatunku)
+                Rule::unique('gatunek')->ignore($this->gatunek)
             ]
         ];
     }

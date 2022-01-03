@@ -49,11 +49,11 @@ return [
         'title' => 'Gwiazdy',
         'labels' => [
             'create' => 'Dodanie nowej gwiazdy',
-            'edit' => 'Edycja danych gatunku',
-            'destroy' => 'Usunięcie gatunku',
-            'destroy-question' => 'Czy na pewno usunąć gatunek :name?',
-            'restore' => 'Anulowanie usunięcia gatunku',
-            'restore-question' => 'Czy anulować usunięcie gatunku :name?'
+            'edit' => 'Edycja danych gwiazdy',
+            'destroy' => 'Usunięcie gwiazdy',
+            'destroy-question' => 'Czy na pewno usunąć gwiazde :name?',
+            'restore' => 'Anulowanie usunięcia gwiazdy',
+            'restore-question' => 'Czy anulować usunięcie gwiazdy :name?'
         ],
         'attribute' => [
             'name' => 'Imie',
@@ -63,10 +63,10 @@ return [
         'flashes' => [
             'success' => [
                 'stored' => 'Dodano gwiazde :name :lastname',
-                'updated' => 'Zaktualizowano kategorię :name',
-                'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
-                'destroy' => 'Kategoria :name została usunięty',
-                'restore' => 'Usunięcie kategorii :name zostało anulowane'
+                'updated' => 'Zaktualizowano gwiazde :name',
+                'nothing-changed' => 'Dane gwiazdy :name nie zmieniły się',
+                'destroy' => 'Gwiazda :name została usunięta',
+                'restore' => 'Usunięcie gwiazdy :name zostało anulowane'
             ]
         ]
     ],
@@ -86,20 +86,21 @@ return [
             'title' => 'Tytół',
             'release' => 'Data premiery',
             'descryption' => 'Opis',
+            'owner' => 'Właściciel',
             'coverif' => 'Czy okładka',
             'cover' => 'Okładka',
             'stars' => 'Gwiazdy w Filmie',
-            'star' => 'Gwiazda nr. :nr',
+            'star' => 'Gwiazda',
             'stars-as' => 'jako',
             'stars-empty' => 'Brak giazd na liscie',
         ],
         'flashes' => [
             'success' => [
                 'stored' => 'Dodano film o tytule :name',
-                'updated' => 'Zaktualizowano kategorię :name',
-                'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
-                'destroy' => 'Kategoria :name została usunięty',
-                'restore' => 'Usunięcie kategorii :name zostało anulowane'
+                'updated' => 'Zaktualizowano film :name',
+                'nothing-changed' => 'Dane filmu :name nie zmieniły się',
+                'destroy' => 'Film :name została usunięty',
+                'restore' => 'Usunięcie Filmu :name zostało anulowane'
             ]
         ]
     ],

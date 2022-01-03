@@ -32,6 +32,12 @@ class FilmDataTable extends DataTable
             ->addColumn('rezyser', function ($data) {
                 return  $data->gwiazda->imie_gwiazdy.' '.$data->gwiazda->nazwisko_gwiazdy;
             })
+            ->addColumn('wlasciciel', function ($data) {
+                if(isset($data->wlasciciel))
+                    return  $data->wlasciciel->name;
+                else
+                    return '';    
+            })
             ->editColumn('gwiazdy_w_filmie', function ($data) {
                 $gwiazdy_w_filmie = $data->gwiazdy_w_filmie;
                 foreach ($gwiazdy_w_filmie as &$gwiazda) {
@@ -76,6 +82,9 @@ class FilmDataTable extends DataTable
                 $query->orWhereHas('gatunek', function ($query) use ($keyword) {
                     return $query->where('gatunek.nazwa_gatunku', 'like', $keyword);
                 });
+                $query->orWhereHas('wlasciciel', function ($query) use ($keyword) {
+                    return $query->where('users.name', 'like', $keyword);
+                });
                 $query->orWhereHas('gwiazdy_w_filmie', function ($query) use ($keyword) {
                     $sql = "CONCAT(gwiazda.imie_gwiazdy,' ',gwiazda.nazwisko_gwiazdy)  like ?";
                     return  $query->whereRaw($sql, ["%{$keyword}%"]);
@@ -88,6 +97,9 @@ class FilmDataTable extends DataTable
             ->orderColumn('rezyser', function ($query, $order) {
                 $query->orderBy('gwiazda_id', $order);
             })
+            ->orderColumn('wlasciciel', function ($query, $order) {
+                $query->orderBy('users_id', $order);
+            })
             ->addColumn('action', function ($row) {
                 
             })
@@ -99,7 +111,7 @@ class FilmDataTable extends DataTable
     public function query()
     {
         $rows = Film::withTrashed()
-            ->with('gatunek', 'gwiazda', 'gwiazdy_w_filmie')->select('film.*');
+            ->with('gatunek', 'gwiazda', 'wlasciciel', 'gwiazdy_w_filmie')->select('film.*');
         return $this->applyScopes($rows);
     }
 }

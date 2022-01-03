@@ -51,11 +51,33 @@ class GwiazdaDataTable extends DataTable
                     self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
             })
             ->addColumn('action', function ($row) {
-                
+                return $this->getActionButtons($row);
             })
             ->rawColumns(['action']);
 
         return $datatable->make(true);
+    }
+
+    private function getActionButtons(Gwiazda $gwiazda): string
+    {
+        $buttons = '<div class="btn-group" role="group" aria-label="action buttons">';
+        $buttons .= $this->getEditButton($gwiazda);
+
+        $buttons .= '</div>';
+        return $buttons;
+    }
+
+    private function getEditButton(Gwiazda $gwiazda): string
+    {
+        if (isset($gwiazda->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gwiazdy-store')) {
+            return '';
+        }
+        return '<a class="btn btn-secondary" href="'.route('gwiazdy.edit', $gwiazda).'"
+        title="'.__('translations.gwiazdy.labels.edit').'" >
+        <i class="bi-pencil"></i></a>';
     }
 
     public function query()

@@ -27,6 +27,7 @@
             <th>{{ __('translations.filmy.attribute.release' ) }}</th>
             <th>{{ __('translations.filmy.attribute.stars' ) }}</th>
             <th>{{ __('translations.filmy.attribute.descryption' ) }}</th>
+            <th>{{ __('translations.filmy.attribute.owner' ) }}</th>
             <th>{{ __('translations.filmy.attribute.coverif' ) }}</th>
             <th>{{ __('translations.attribute.created_at' ) }}</th>
             <th>{{ __('translations.attribute.updated_at' ) }}</th>

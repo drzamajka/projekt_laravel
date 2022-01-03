@@ -28,6 +28,11 @@ class CreateFilmTable extends Migration
             $table->string('tytul');
             $table->date('data_premiery');
             $table->text('opis');
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('no action');
             $table->boolean('czyokladka');
             $table->timestamps();
             $table->softDeletes();

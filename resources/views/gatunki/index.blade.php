@@ -21,7 +21,6 @@
           <tr>
             <th>#</th>
             <th>{{ __('translations.gatunki.attribute.name') }}</th>
-            <!-- <th>{{ __('translations.gatunki.attribute.count_filmy' ) }}</th> -->
             <th>{{ __('translations.attribute.created_at' ) }}</th>
             <th>{{ __('translations.attribute.updated_at' ) }}</th>
             <th>{{ __('translations.attribute.deleted_at' ) }}</th>
