@@ -12,6 +12,18 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/gatunki.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/form.scss', 'public/css')
-    .sourceMaps();
+    .sass('resources/sass/gatunki.scss', 'public/css')
+    .js('resources/js/gwiazdy.js', 'public/js')
+    .sass('resources/sass/filmy.scss', 'public/css')
+    .js('resources/js/filmy.js', 'public/js')
+    .sass('resources/sass/gwiazdy.scss', 'public/css')
+    .js('resources/js/film.js', 'public/js')
+    .sass('resources/sass/film.scss', 'public/css')
+    .copy('resources/views/vendor/datatables/i18n/pl.json', 'public/vendor/datatables/i18n')
+    .copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/views/vendor/jsvalidation')
+    .copy('vendor/proengsoft/laravel-jsvalidation/public', 'resources/js/vendor/jsvalidation')
+    .sourceMaps()
+    .extract();
