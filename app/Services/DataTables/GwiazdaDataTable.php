@@ -62,6 +62,8 @@ class GwiazdaDataTable extends DataTable
     {
         $buttons = '<div class="btn-group" role="group" aria-label="action buttons">';
         $buttons .= $this->getEditButton($gwiazda);
+        $buttons .= $this->getDeleteButton($gwiazda);
+        $buttons .= $this->getRestoreButton($gwiazda);
 
         $buttons .= '</div>';
         return $buttons;
@@ -78,6 +80,56 @@ class GwiazdaDataTable extends DataTable
         return '<a class="btn btn-secondary" href="'.route('gwiazdy.edit', $gwiazda).'"
         title="'.__('translations.gwiazdy.labels.edit').'" >
         <i class="bi-pencil"></i></a>';
+    }
+
+    private function getDeleteButton(Gwiazda $gwiazda): string
+    {
+        if (isset($gwiazda->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gwiazdy-store')) {
+            return '';
+        }
+        return view('components.datatables.confirm', [
+            'slot' => '<i class="bi bi-trash"></i>',
+            'attributes' => new ComponentAttributeBag([
+                'action' => route('gwiazdy.destroy', $gwiazda),
+                'method' => 'DELETE',
+                'confirm-text' => __('translations.buttons.yes'),
+                'confirm-class' => 'btn btn-danger me-2',
+                'cancel-text' => __('translations.buttons.no'),
+                'cancel-class' => 'btn btn-secondary ms-2',
+                'icon' => 'question',
+                'message' => __('translations.gwiazdy.labels.destroy-question', ['name' => $gwiazda->imie_gwiazdy.' '. $gwiazda->nazwisko_gwiazdy]),
+                'button-class' => 'btn btn-danger',
+                'button-title' => __('translations.gwiazdy.labels.destroy')
+            ])
+        ])->render();
+    }
+
+    private function getRestoreButton(Gwiazda $gwiazda): string
+    {
+        if (!isset($gwiazda->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gwiazdy-store')) {
+            return '';
+        }
+        return view('components.datatables.confirm', [
+            'slot' => '<i class="bi bi-trash"></i>',
+            'attributes' => new ComponentAttributeBag([
+                'action' => route('gwiazdy.restore', $gwiazda),
+                'method' => 'PUT',
+                'confirm-text' => __('translations.buttons.yes'),
+                'confirm-class' => 'btn btn-primary me-2',
+                'cancel-text' => __('translations.buttons.no'),
+                'cancel-class' => 'btn btn-secondary ms-2',
+                'icon' => 'question',
+                'message' => __('translations.gwiazdy.labels.restore-question', ['name' => $gwiazda->imie_gwiazdy.' '. $gwiazda->nazwisko_gwiazdy]),
+                'button-class' => 'btn btn-primary',
+                'button-title' => __('translations.gwiazdy.labels.restore')
+            ])
+        ])->render();
     }
 
     public function query()

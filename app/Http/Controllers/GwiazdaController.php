@@ -61,4 +61,23 @@ class GwiazdaController extends Controller
                 )
             );
     }
+
+    public function destroy(Gwiazda $gwiazda)
+    {
+        $gwiazda->delete();
+        return redirect()->route('gwiazdy.index')
+            ->with('success', __('translations.gwiazdy.flashes.success.destroy', [
+                'name' => $gwiazda->imie_gwiazdy.' '. $gwiazda->nazwisko_gwiazdy
+            ]));
+    }
+
+    public function restore(int $id)
+    {
+        $gwiazda = Gwiazda::onlyTrashed()->findOrFail($id);
+        $gwiazda->restore();
+        return redirect()->route('gwiazdy.index')
+            ->with('success', __('translations.gwiazdy.flashes.success.restore', [
+                'name' => $gwiazda->imie_gwiazdy.' '. $gwiazda->nazwisko_gwiazdy
+            ]));
+    }
 }

@@ -104,6 +104,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('{gwiazda}', [GwiazdaController::class, 'update'])
             ->where('gwiazda', '[0-9]+')
             ->name('update')
+            ->middleware(['permission:gwiazdy-store']);
+        // usuwanie wpisu     
+        Route::delete('{gwiazda}/destroy', [GwiazdaController::class, 'destroy']) 
+            ->where('gwiazda', '[0-9]+')
+            ->name('destroy')
+            ->middleware(['permission:gwiazdy-store']);
+        Route::put('{gwiazda}', [GwiazdaController::class, 'restore']) 
+            ->where('gwiazda', '[0-9]+')
+            ->name('restore')
             ->middleware(['permission:gwiazdy-store']);     
     });
 
