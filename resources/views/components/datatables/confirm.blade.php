@@ -15,4 +15,4 @@
   <button type="submit" class="{{ $attributes->get('button-class') }}"
     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $attributes->get('button-title') }}" 
     >{!! $slot !!}</button>
-</form>    
+</form> 

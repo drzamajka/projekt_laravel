@@ -61,6 +61,8 @@ class GatunekDataTable extends DataTable
     {
         $buttons = '<div class="btn-group" role="group" aria-label="action buttons">';
         $buttons .= $this->getEditButton($gatunek);
+        $buttons .= $this->getDeleteButton($gatunek);
+        $buttons .= $this->getRestoreButton($gatunek);
 
         $buttons .= '</div>';
         return $buttons;
@@ -77,6 +79,56 @@ class GatunekDataTable extends DataTable
         return '<a class="btn btn-secondary" href="'.route('gatunki.edit', $gatunek).'"
         title="'.__('translations.gatunki.labels.edit').'" >
         <i class="bi-pencil"></i></a>';
+    }
+
+    private function getDeleteButton(Gatunek $gatunek): string
+    {
+        if (isset($gatunek->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gatunki-store')) {
+            return '';
+        }
+        return view('components.datatables.confirm', [
+            'slot' => '<i class="bi bi-trash"></i>',
+            'attributes' => new ComponentAttributeBag([
+                'action' => route('gatunki.destroy', $gatunek),
+                'method' => 'DELETE',
+                'confirm-text' => __('translations.buttons.yes'),
+                'confirm-class' => 'btn btn-danger me-2',
+                'cancel-text' => __('translations.buttons.no'),
+                'cancel-class' => 'btn btn-secondary ms-2',
+                'icon' => 'question',
+                'message' => __('translations.gatunki.labels.destroy-question', ['name' => $gatunek->nazwa_gatunku]),
+                'button-class' => 'btn btn-danger',
+                'button-title' => __('translations.gatunki.labels.destroy')
+            ])
+        ])->render();
+    }
+
+    private function getRestoreButton(Gatunek $gatunek): string
+    {
+        if (!isset($gatunek->deleted_at)) {
+            return '';
+        }
+        if (!Auth::user()->can('gatunki-store')) {
+            return '';
+        }
+        return view('components.datatables.confirm', [
+            'slot' => '<i class="bi bi-trash"></i>',
+            'attributes' => new ComponentAttributeBag([
+                'action' => route('gatunki.restore', $gatunek),
+                'method' => 'PUT',
+                'confirm-text' => __('translations.buttons.yes'),
+                'confirm-class' => 'btn btn-primary me-2',
+                'cancel-text' => __('translations.buttons.no'),
+                'cancel-class' => 'btn btn-secondary ms-2',
+                'icon' => 'question',
+                'message' => __('translations.gatunki.labels.restore-question', ['name' => $gatunek->nazwa_gatunku]),
+                'button-class' => 'btn btn-primary',
+                'button-title' => __('translations.gatunki.labels.restore')
+            ])
+        ])->render();
     }
 
 

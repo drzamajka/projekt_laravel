@@ -14,9 +14,9 @@ class GwiazdaDataTable extends DataTable
 {
 
     const SQL_RAW_FILTER = [
-        'created_at' => "DATE_FORMAT(gatunek.created_at,'%Y-%m-%d %H:%i')",
-        'updated_at' => "DATE_FORMAT(gatunek.updated_at,'%Y-%m-%d %H:%i')",
-        'deleted_at' => "DATE_FORMAT(gatunek.deleted_at,'%Y-%m-%d %H:%i')",
+        'created_at' => "DATE_FORMAT(gwiazda.created_at,'%Y-%m-%d %H:%i')",
+        'updated_at' => "DATE_FORMAT(gwiazda.updated_at,'%Y-%m-%d %H:%i')",
+        'deleted_at' => "DATE_FORMAT(gwiazda.deleted_at,'%Y-%m-%d %H:%i')",
     ];
 
     public function ajax()
@@ -44,11 +44,11 @@ class GwiazdaDataTable extends DataTable
             })
             ->filterColumn('updated_at', function ($query, $keyword) {
                 $query->whereRaw(
-                    self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
+                    self::SQL_RAW_FILTER['updated_at'] . ' LIKE ?', ["%$keyword%"]);
             })
             ->filterColumn('deleted_at', function ($query, $keyword) {
                 $query->whereRaw(
-                    self::SQL_RAW_FILTER['created_at'] . ' LIKE ?', ["%$keyword%"]);
+                    self::SQL_RAW_FILTER['deleted_at'] . ' LIKE ?', ["%$keyword%"]);
             })
             ->addColumn('action', function ($row) {
                 return $this->getActionButtons($row);

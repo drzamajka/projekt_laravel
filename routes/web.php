@@ -69,7 +69,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('{gatunek}', [GatunekController::class, 'update'])
             ->where('gatunek', '[0-9]+')
             ->name('update')
-            ->middleware(['permission:gatunki-store']);      
+            ->middleware(['permission:gatunki-store']);
+        // usuwanie wpisu     
+        Route::delete('{gatunek}/destroy', [GatunekController::class, 'destroy']) 
+            ->where('gatunek', '[0-9]+')
+            ->name('destroy')
+            ->middleware(['permission:gatunki-store']);
+        Route::put('{gatunek}', [GatunekController::class, 'restore']) 
+            ->where('gatunek', '[0-9]+')
+            ->name('restore')
+            ->middleware(['permission:gatunki-store']);    
     });
 
     Route::name('gwiazdy.')->prefix('gwiazdy')->group(function () {

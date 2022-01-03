@@ -38,10 +38,10 @@ return [
         'flashes' => [
             'success' => [
                 'stored' => 'Dodano gatunek :name',
-                'updated' => 'Zaktualizowano kategorię :name',
-                'nothing-changed' => 'Dane kategorii :name nie zmieniły się',
-                'destroy' => 'Kategoria :name została usunięty',
-                'restore' => 'Usunięcie kategorii :name zostało anulowane'
+                'updated' => 'Zaktualizowano gatunek :name',
+                'nothing-changed' => 'Dane gatunku :name nie zmieniły się',
+                'destroy' => 'Gatunek :name została usunięty',
+                'restore' => 'Usunięcie gatunku :name zostało anulowane'
             ]
         ]
     ],

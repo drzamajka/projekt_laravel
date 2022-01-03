@@ -62,4 +62,23 @@ class GatunekController extends Controller
                 )
             );
     }
+
+    public function destroy(Gatunek $gatunek)
+    {
+        $gatunek->delete();
+        return redirect()->route('gatunki.index')
+            ->with('success', __('translations.gatunki.flashes.success.destroy', [
+                'name' => $gatunek->name
+            ]));
+    }
+
+    public function restore(int $id)
+    {
+        $gatunek = Gatunek::onlyTrashed()->findOrFail($id);
+        $gatunek->restore();
+        return redirect()->route('gatunki.index')
+            ->with('success', __('translations.gatunki.flashes.success.restore', [
+                'name' => $gatunek->nazwa_gatunku
+            ]));
+    }
 }
