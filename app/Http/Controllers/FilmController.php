@@ -34,7 +34,6 @@ class FilmController extends Controller
     public function film($id)
     {
         $film = Film::withTrashed()->with('gatunek', 'gwiazda', 'wlasciciel', 'gwiazdy_w_filmie')->find($id);
-        //dd($film);
         return view(
             'filmy.film',
             [
@@ -59,8 +58,6 @@ class FilmController extends Controller
 
     public function store(FilmRequest $request)
     {    
-        //dd($request->all());
-        //dd(Auth::user()->id);
         $aray;
         if ($request->hasFile('cover'))
             $aray = array_merge($request->all(), ['czyokladka' => '1']);
@@ -115,7 +112,6 @@ class FilmController extends Controller
             $aray = array_merge($request->all(), ['czyokladka' => '1']);
         else
             $aray = $request->all();
-        // okładka    
         if ($request->hasFile('cover')) {
             $destination = 'public/covers/'.$film->id.".jpg";
             if(File::exists($destination)){
