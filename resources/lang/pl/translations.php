@@ -9,7 +9,8 @@ return [
         'log-viewer' => 'Logi',
         'profile' => 'Profil',
         'settings' => 'Ustawienia',
-        'log-out' => 'Wyloguj'
+        'log-out' => 'Wyloguj',
+        'error' => 'Błąd logowania'
     ],
     'buttons' => [
         'cancel' => 'Anuluj',

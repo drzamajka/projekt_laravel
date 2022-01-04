@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Integer;
 use PhpParser\Builder\Property;
 
+use Laravelista\Comments\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -154,6 +155,8 @@ class FilmController extends Controller
     public function restore(int $id)
     {
         $film = Film::onlyTrashed()->findOrFail($id);
+        $coments = Comment::onlyTrashed()->where('commentable_id', '=', $id)->where('deleted_at', '>=', $film->deleted_at);
+        $coments->restore();
         $film->restore();
         return redirect()->route('home')
             ->with('success', __('translations.filmy.flashes.success.restore', [

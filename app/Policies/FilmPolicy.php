@@ -12,12 +12,13 @@ class FilmPolicy
 
     public function viewAny(User $user)
     {
-        return $user->can('filmy-index');
+        return true;
     }
 
-    public function view(User $user, Film $film)
+    public function film(User $user, Film $film)
     {
-        return $user->can('filmy-index');
+        dd($user);
+        return true;
     }
 
     public function create(User $user)

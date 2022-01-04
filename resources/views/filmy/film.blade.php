@@ -18,8 +18,8 @@
                   :confirm-text="__('translations.buttons.yes')" confirm-class="btn btn-danger me-2"
                   :cancel-text="__('translations.buttons.no')" cancel-class="btn btn-secondary ms-2"
                   icon="question"
-                  :message="__('translations.manufacturers.labels.destroy-question', ['name' => $film->tytul] )" 
-                  button-class="btn btn-danger" :button-title="__('translations.manufacturers.labels.destroy')">
+                  :message="__('translations.filmy.labels.destroy-question', ['name' => $film->tytul] )" 
+                  button-class="btn btn-danger" :button-title="__('translations.filmy.labels.destroy')">
                     <i class="bi bi-trash"></i>
                 </x-confirm>
               @endcan
@@ -29,8 +29,8 @@
                   :confirm-text="__('translations.buttons.yes')" confirm-class="btn btn-success me-2"
                   :cancel-text="__('translations.buttons.no')" cancel-class="btn btn-secondary ms-2"
                   icon="question"
-                  :message="__('translations.manufacturers.labels.restore-question', ['name' => $film->tytul] )" 
-                  button-class="btn btn-success" :button-title="__('translations.manufacturers.labels.restore')">
+                  :message="__('translations.filmy.labels.restore-question', ['name' => $film->tytul] )" 
+                  button-class="btn btn-success" :button-title="__('translations.filmy.labels.restore')">
                     <i class="bi bi-trash"></i>
                 </x-confirm>               
               @endcan
@@ -76,5 +76,10 @@
           <p>{{ __('translations.attribute.updated_at' ) }}: {{$film->updated_at}}</p>
           <p>{{ __('translations.attribute.deleted_at' ) }}: {{$film->deleted_at}}</p>
     </div>
+    @if($film->deleted_at == NULL)
+      <div>
+        @comments(['model' => $film])
+      </div>
+    @endif
 
 </x-app-layout>

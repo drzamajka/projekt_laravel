@@ -20,14 +20,18 @@ use App\Http\Controllers\GwiazdaController;
 //     return view('welcome');
 // })->name('home');
 
-Route::get('/home', function () {
+Route::get('/welcom', function () {
     return view('welcome');
 })->name('welcom');
 
- Route::get('/', [FilmController::class, 'index'] )->name('home');
- Route::name('filmy.')->prefix('filmy')->group(function () {
+Route::get('/', function () {
+    return view('filmy.index');
+})->name('home');
+
+//Route::get('/', [FilmController::class, 'index'] )->name('home');
+Route::name('filmy.')->prefix('filmy')->group(function () {
     Route::post('/datatable', [FilmController::class, 'dataTable'])
-                ->name('datatable');
+            ->name('datatable');
     Route::get('/film&{id}', [FilmController::class, 'film'])
         ->where('id', '[0-9]+')
         ->name('film');

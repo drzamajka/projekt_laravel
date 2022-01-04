@@ -8,10 +8,11 @@ use App\Models\Gwiazda;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravelista\Comments\Commentable;
 
 class Film extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Commentable;
     
     protected $table = 'film';
     protected $fillable = [
