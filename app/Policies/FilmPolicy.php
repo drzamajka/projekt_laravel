@@ -27,12 +27,12 @@ class FilmPolicy
 
     public function update(User $user, Film $film)
     {
-        return $user->can('filmy-store') && $user->id === $film->users_id;
+        return $user->can('filmy-store') && $user->id === $film->users_id && $film->deleted_at === null;;
     }
 
     public function delete(User $user, Film $film)
     {
-        return $user->can('filmy-store') && $user->id === $film->users_id && $film->deleted_at === null;;
+        return $user->can('filmy-store') && $user->id === $film->users_id && $film->deleted_at === null;
     }
 
     public function restore(User $user, Film $film)

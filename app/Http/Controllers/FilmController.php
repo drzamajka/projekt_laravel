@@ -33,7 +33,7 @@ class FilmController extends Controller
 
     public function film($id)
     {
-        $film = Film::with('gatunek', 'gwiazda', 'wlasciciel', 'gwiazdy_w_filmie')->find($id);
+        $film = Film::withTrashed()->with('gatunek', 'gwiazda', 'wlasciciel', 'gwiazdy_w_filmie')->find($id);
         //dd($film);
         return view(
             'filmy.film',
@@ -133,49 +133,35 @@ class FilmController extends Controller
             $film->fill($aray)->save();
             $id = $request->input('aktorzy_id', []);
             $role = $request->input('aktorzy_role', []);
-            // $stars = [];
-            // for($i=0;$i<count($role);$i++)
-            // if(array_key_exists($id[$i], $stars))
-            // {
-            //     $roles = $stars[$id[$i]]['rola'];
-            //     //dd($roles); 
-            //     if(is_array($roles))
-            //     {
-            //         array_push($roles,$role[$i]);
-            //     }
-            //     else
-            //         $roles =  [$roles, $role[$i]];  
-                
-            //     //dd($roles); 
-            //     $stars[$id[$i]]['rola'] =  $roles ;
-            // }
-            // else
-            //     $stars += [ $id[$i] => ['rola' => $role[$i]] ];
-            // dd($stars);    
-
-            // // $film->gwiazdy_w_filmie()->sync($stars);
-            // $film->gwiazdy_w_filmie_change;
-            //dd($id); 
             $film->gwiazdy_w_filmie()->detach();
             for($i=0;$i<count($role);$i++)
                 $film->gwiazdy_w_filmie()->attach($id[$i], [ 'rola' => $role[$i] ]);
             return $film;
         });
 
-
-
-
         return redirect()->route('home')
             ->with(
                 'success',
-                __(
-                    $film->wasChanged()
-                        ? 'translations.filmy.flashes.success.updated'
-                        : 'translations.filmy.flashes.success.nothing-changed',
-                    [
-                        'name' => $film->tytul
-                    ]
-                )
+                __( 'translations.filmy.flashes.success.updated', [ 'name' => $film->tytul])
             );
+    }
+
+    public function destroy(Film $film)
+    {
+        $film->delete();
+        return redirect()->route('home')
+            ->with('success', __('translations.filmy.flashes.success.destroy', [
+                'name' => $film->tytul
+            ]));
+    }
+
+    public function restore(int $id)
+    {
+        $film = Film::onlyTrashed()->findOrFail($id);
+        $film->restore();
+        return redirect()->route('home')
+            ->with('success', __('translations.filmy.flashes.success.restore', [
+                'name' => $film->tytul
+            ]));
     }
 }

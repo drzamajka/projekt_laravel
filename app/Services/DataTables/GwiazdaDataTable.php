@@ -121,12 +121,12 @@ class GwiazdaDataTable extends DataTable
                 'action' => route('gwiazdy.restore', $gwiazda),
                 'method' => 'PUT',
                 'confirm-text' => __('translations.buttons.yes'),
-                'confirm-class' => 'btn btn-primary me-2',
+                'confirm-class' => 'btn btn-success me-2',
                 'cancel-text' => __('translations.buttons.no'),
                 'cancel-class' => 'btn btn-secondary ms-2',
                 'icon' => 'question',
                 'message' => __('translations.gwiazdy.labels.restore-question', ['name' => $gwiazda->imie_gwiazdy.' '. $gwiazda->nazwisko_gwiazdy]),
-                'button-class' => 'btn btn-primary',
+                'button-class' => 'btn btn-success',
                 'button-title' => __('translations.gwiazdy.labels.restore')
             ])
         ])->render();

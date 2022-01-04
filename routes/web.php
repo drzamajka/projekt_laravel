@@ -22,20 +22,18 @@ use App\Http\Controllers\GwiazdaController;
 
 Route::get('/home', function () {
     return view('welcome');
-})->name('home');
+})->name('welcom');
 
  Route::get('/', [FilmController::class, 'index'] )->name('home');
  Route::name('filmy.')->prefix('filmy')->group(function () {
     Route::post('/datatable', [FilmController::class, 'dataTable'])
                 ->name('datatable');
     Route::get('/film&{id}', [FilmController::class, 'film'])
-                ->name('film');
+        ->where('id', '[0-9]+')
+        ->name('film');
     Route::get('{film}', [FilmController::class, 'film'])
         ->where('film', '[0-9]+')
-        ->name('index');                
-    Route::get('create', [GatunekController::class, 'create'])
-            ->name('create')
-            ->middleware(['permission:gatunki-store']);         
+        ->name('index');                        
  });           
  //Route::get('/', function () { return view('dashboard'); } )->name('home');
 
@@ -119,8 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::name('filmy.')->prefix('filmy')->group(function () {
         // lista wszystkich
         Route::get('', [FilmController::class, 'index'])
-            ->name('index')
-            ->middleware(['permission:filmy-index']);
+            ->name('index');
         // dodawanie wpisu   
         Route::get('create', [FilmController::class, 'create'])
             ->name('create')
@@ -136,7 +133,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('{film}', [FilmController::class, 'update'])
             ->where('film', '[0-9]+')
             ->name('update')
-            ->middleware(['permission:filmy-store']);        
+            ->middleware(['permission:filmy-store']);
+        // usuwanie wpisu     
+        Route::delete('{film}/destroy', [FilmController::class, 'destroy']) 
+            ->where('film', '[0-9]+')
+            ->name('destroy')
+            ->middleware(['permission:filmy-store']);
+        Route::put('{film}', [FilmController::class, 'restore']) 
+            ->where('film', '[0-9]+')
+            ->name('restore')
+            ->middleware(['permission:filmy-store']);            
     });
 
 });

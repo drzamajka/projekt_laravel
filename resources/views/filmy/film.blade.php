@@ -12,6 +12,28 @@
               <a class="btn btn-info" href="{{ route('filmy.edit', $film) }}" title="'.__('translations.film.labels.edit').'" >
               <i class="bi-pencil"></i></a> 
             @endcan 
+            @can('delete', $film)
+                <x-confirm
+                  :action="route('filmy.destroy', $film)" method="DELETE"
+                  :confirm-text="__('translations.buttons.yes')" confirm-class="btn btn-danger me-2"
+                  :cancel-text="__('translations.buttons.no')" cancel-class="btn btn-secondary ms-2"
+                  icon="question"
+                  :message="__('translations.manufacturers.labels.destroy-question', ['name' => $film->tytul] )" 
+                  button-class="btn btn-danger" :button-title="__('translations.manufacturers.labels.destroy')">
+                    <i class="bi bi-trash"></i>
+                </x-confirm>
+              @endcan
+              @can('restore', $film)
+                <x-confirm
+                  :action="route('filmy.restore', $film)" method="PUT"
+                  :confirm-text="__('translations.buttons.yes')" confirm-class="btn btn-success me-2"
+                  :cancel-text="__('translations.buttons.no')" cancel-class="btn btn-secondary ms-2"
+                  icon="question"
+                  :message="__('translations.manufacturers.labels.restore-question', ['name' => $film->tytul] )" 
+                  button-class="btn btn-success" :button-title="__('translations.manufacturers.labels.restore')">
+                    <i class="bi bi-trash"></i>
+                </x-confirm>               
+              @endcan
             <a class="btn btn-secondary" data-toggle="collapse" href="{{ route('home') }}" role="button" aria-expanded="false" aria-controls="collapseExample">
               {{ __('translations.buttons.return') }}
             </a>

@@ -120,12 +120,12 @@ class GatunekDataTable extends DataTable
                 'action' => route('gatunki.restore', $gatunek),
                 'method' => 'PUT',
                 'confirm-text' => __('translations.buttons.yes'),
-                'confirm-class' => 'btn btn-primary me-2',
+                'confirm-class' => 'btn btn-success me-2',
                 'cancel-text' => __('translations.buttons.no'),
                 'cancel-class' => 'btn btn-secondary ms-2',
                 'icon' => 'question',
                 'message' => __('translations.gatunki.labels.restore-question', ['name' => $gatunek->nazwa_gatunku]),
-                'button-class' => 'btn btn-primary',
+                'button-class' => 'btn btn-success',
                 'button-title' => __('translations.gatunki.labels.restore')
             ])
         ])->render();
