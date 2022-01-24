@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gwiazda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\gwiazdy\GwiazdaRequest;
 use App\Services\DataTables\GwiazdaDataTable;
 
@@ -16,7 +17,20 @@ class GwiazdaController extends Controller
 
     public function ajax(Request $request)
     {
-        return $dataTable->render('gwiazdy.index');
+        $search = $request->search;
+        $directors = [];
+        if (strlen($search) === 0) {
+            $directors = Gwiazda::orderBy('nazwisko_gwiazdy', 'asc')
+                ->select('id', 'imie_gwiazdy', 'nazwisko_gwiazdy')->limit(5)
+                ->get()->toArray();
+        } else {
+            $directors = Gwiazda::orderBy('nazwisko_gwiazdy', 'asc')
+            ->select('id', 'imie_gwiazdy', 'nazwisko_gwiazdy')
+                ->where(DB::raw('CONCAT(imie_gwiazdy, " ", nazwisko_gwiazdy)'), 'like', '%' . $search . '%')
+                ->get()->toArray();
+        }
+        // ->where("CONCAT(imie_gwiazdy,' ',nazwisko_gwiazdy)", 'like', '%' . $search . '%')
+        return response()->json($directors);
     }
 
     public function dataTable(GwiazdaDataTable $dataTable)

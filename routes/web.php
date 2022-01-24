@@ -100,7 +100,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->name('datatable')
             ->middleware(['permission:gwiazdy-index']);
         // selext2 asynchroniczne
-        Route::get('ajax', [GwiazdaController::class, 'ajax'])
+        Route::post('ajax', [GwiazdaController::class, 'ajax'])
             ->name('ajax')
             ->middleware(['permission:gwiazdy-index']);    
         // dodawanie wpisu   

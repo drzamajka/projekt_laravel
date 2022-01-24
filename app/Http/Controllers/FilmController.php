@@ -49,9 +49,10 @@ class FilmController extends Controller
         return $dataTable->render('filmy.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
         return view('filmy.create', [
+            'director' => Gwiazda::find($request->old('gwiazda_id')),
             'directors' =>  Gwiazda::orderBy('nazwisko_gwiazdy')->get(),
             'types' => Gatunek::orderBy('nazwa_gatunku')->get()
         ]);
@@ -91,13 +92,15 @@ class FilmController extends Controller
             ]));
     }
 
-    public function edit(Film $film )
+    public function edit(Film $film, Request $request)
     {
+        //dd(Film::with('gwiazdy_w_filmie','gwiazda')->find($film->id));
         $edit = true;
         return view('filmy.create', [
-            'directors' =>  Gwiazda::orderBy('nazwisko_gwiazdy')->get(),
+            'director' => Gwiazda::find($request->old('gwiazda_id')),
+            'directors' =>  Gwiazda::orderBy('id')->get(),
             'types' => Gatunek::orderBy('nazwa_gatunku')->get(),
-            'film' => Film::with('gwiazdy_w_filmie')->find($film->id),
+            'film' => Film::with('gwiazdy_w_filmie','gwiazda')->find($film->id),
             'edit' => true
         ]);
         return view(
@@ -108,8 +111,9 @@ class FilmController extends Controller
 
     public function update(FilmRequest $request, Film $film)
     {
+
         $aray;
-        if ($request->hasFile('cover'))
+        if ($request->hasFile('cover') || $film->czyokladka == 1)
             $aray = array_merge($request->all(), ['czyokladka' => '1']);
         else if($request->get("film-cover-check") === "false")
             $aray = array_merge($request->all(), ['czyokladka' => '0']);
@@ -128,10 +132,12 @@ class FilmController extends Controller
         }
         else{
             if($film->czyokladka == 1 && $aray["czyokladka"] == 0)
+            {
                 $destination = 'images/covers/'.$film->id.".jpg";
                 if(File::exists($destination)){
                     File::delete($destination);
                 }
+            }
         }
         
         $film = DB::transaction(function () use ($aray,$request,$film) {

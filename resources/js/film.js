@@ -43,6 +43,35 @@ $(function () {
         language: config.locale
     });
 
+    $('#film-director').select2({
+        theme: 'bootstrap-5',
+        language: config.locale,
+        allowClear: true,
+        ajax: {
+            url: config.host + '/gwiazdy/ajax',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            processResults: function (response) {
+                var data = $.map(response, function (director) {
+                    director.text = director.text || director.imie_gwiazdy+' '+director.nazwisko_gwiazdy; // replace name with the property used for the text                  
+                    return director;
+                });
+                return {
+                    results: data
+                };
+            }
+        }
+    });
+
     $('#film-cover').change(function(){
             
         let reader = new FileReader();

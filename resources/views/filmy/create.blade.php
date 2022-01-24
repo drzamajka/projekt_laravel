@@ -73,19 +73,11 @@
                 id="film-director"                 
                 aria-describedby="film-director-error">
                 <option></option>
-                @foreach ($directors as $director)
-                  <option value="{{ $director->id }}"
-                  @if (isset($film))
-                    @if( $film->gwiazda_id == $director->id ) 
-                      selected="selected"
-                    @endif
-                  @else
-                    @if( old('gwiazda_id', null) == $director->id ) 
-                      selected="selected"
-                    @endif
-                  @endif>
-                  {{ $director->imie_gwiazdy  }} {{ $director->nazwisko_gwiazdy  }}</option>
-                @endforeach
+                @if (isset($director))
+                    <option value="{{ $director->id }}" selected>{{ $director->imie_gwiazdy }} {{ $director->nazwisko_gwiazdy }}</option>  
+                  @elseif (isset($film))
+                    <option value="{{ $film->gwiazda->id }}" selected>{{ $film->gwiazda->imie_gwiazdy }} {{ $film->gwiazda->nazwisko_gwiazdy }}</option>  
+                  @endif         
               </select>
               @error('gwiazda_id')
               <span id="film-director-error" class="invalid-feedback" role="alert">
