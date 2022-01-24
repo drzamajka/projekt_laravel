@@ -24,7 +24,7 @@ class FilmController extends Controller
     public function __construct()
     {
         // Autoryzacia
-        $this->authorizeResource(film::class, 'film');
+        $this->authorizeResource(Film::class, 'film');
     }
 
     public function index(FilmDataTable $dataTable)
@@ -63,10 +63,10 @@ class FilmController extends Controller
         if ($request->hasFile('cover'))
             $aray = array_merge($request->all(), ['czyokladka' => '1']);
         else
-            $aray = array_merge($request->all(), ['czyokladka' => '0']);
-        $aray = array_merge($aray, ['users_id' => Auth::user()->id]);    
-        //dd($aray);
-            $film = DB::transaction(function () use ($aray,$request) {
+            $aray = array_merge($request->all(), ['czyokladka' => '0']);    
+        $aray = array_merge($aray, ['users_id' => Auth::user()->id]);   
+
+        $film = DB::transaction(function () use ($aray,$request) {
             $film = Film::create( $aray );
             $id = $request->input('aktorzy_id', []);
             $role = $request->input('aktorzy_role', []);
@@ -111,8 +111,9 @@ class FilmController extends Controller
         $aray;
         if ($request->hasFile('cover'))
             $aray = array_merge($request->all(), ['czyokladka' => '1']);
-        else
-            $aray = $request->all();
+        else if($request->get("film-cover-check") === "false")
+            $aray = array_merge($request->all(), ['czyokladka' => '0']);
+   
         if ($request->hasFile('cover')) {
             $destination = 'public/covers/'.$film->id.".jpg";
             if(File::exists($destination)){
@@ -124,7 +125,14 @@ class FilmController extends Controller
             $img->resize(500, 720);
             $img->stream(); // <-- Key point
             Storage::disk('local')->put('public/covers/'.$film->id.".jpg", $img, 'public');
-        }    
+        }
+        else{
+            if($film->czyokladka == 1 && $aray["czyokladka"] == 0)
+                $destination = 'images/covers/'.$film->id.".jpg";
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+        }
         
         $film = DB::transaction(function () use ($aray,$request,$film) {
             $film->fill($aray)->save();

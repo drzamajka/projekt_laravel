@@ -37,13 +37,6 @@
         </x-nav-link>
       </li>           
       @endcan         
-      <!-- @can('filmy-index') 
-      <li class="nav-item">
-        <x-nav-link :href="route('filmy.index')"  :active="request()->routeIs('filmy.index')">
-            {{ __('translations.filmy.title') }}
-        </x-nav-link>
-      </li>           
-      @endcan   -->
       @can('log-viewer') 
       <li class="nav-item">
         <x-nav-link :href="route('log-viewer::dashboard')">
@@ -61,8 +54,7 @@
         {{ Auth::user()->name }}
       </a>
       <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="profile">
-        <li><a class="dropdown-item disabled" href="#" aria-disabled="true">{{ __('translations.dashboard.settings') }}</a></li>
-        <li><a class="dropdown-item disabled" href="#" aria-disabled="true">{{ __('translations.dashboard.profile') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('uzytkownik.index', Auth::user()) }}" >{{ __('translations.dashboard.profile') }}</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="{{ route('logout') }}">{{ __('translations.dashboard.log-out') }}</a></li>
       </ul>

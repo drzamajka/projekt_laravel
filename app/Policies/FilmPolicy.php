@@ -17,7 +17,6 @@ class FilmPolicy
 
     public function film(User $user, Film $film)
     {
-        dd($user);
         return true;
     }
 

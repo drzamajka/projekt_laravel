@@ -14,6 +14,11 @@ class GwiazdaController extends Controller
         return $dataTable->render('gwiazdy.index');
     }
 
+    public function ajax(Request $request)
+    {
+        return $dataTable->render('gwiazdy.index');
+    }
+
     public function dataTable(GwiazdaDataTable $dataTable)
     {
         return $dataTable->render('gwiazdy.index');

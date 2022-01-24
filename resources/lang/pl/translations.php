@@ -20,7 +20,15 @@ return [
         'no' => 'Nie',
         'return' => 'Powrót',
         'store-star' => 'Dodaj gwiazde',
-        'delete-star' => 'Usuń gwiazde'
+        'delete-star' => 'Usuń gwiazde',
+        'upgrade' => 'Zostań twórcą'
+    ],
+    'urzytkownik' => [
+        'labels' => [
+            'upgrade-question' => 'Czy napewno chcesz zostać twórcą',
+            'e-mail' => 'Adres e-mail',
+            'role' => 'Role użytkownika'
+        ]
     ],
     'gatunki' => [
         'title' => 'Gatunki',
@@ -90,6 +98,8 @@ return [
             'owner' => 'Właściciel',
             'coverif' => 'Czy okładka',
             'cover' => 'Okładka',
+            'default-cover' => 'Domyślna okładka',
+            'custom-cover' => 'Własna okładka',
             'stars' => 'Gwiazdy w Filmie',
             'star' => 'Gwiazda',
             'stars-as' => 'jako',

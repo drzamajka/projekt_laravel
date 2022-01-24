@@ -22,8 +22,11 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/gwiazdy.scss', 'public/css')
     .js('resources/js/film.js', 'public/js')
     .sass('resources/sass/film.scss', 'public/css')
+    .js('resources/js/uzytkownik.js', 'public/js')
+    .sass('resources/sass/uzytkownik.scss', 'public/css')
     .copy('resources/views/vendor/datatables/i18n/pl.json', 'public/vendor/datatables/i18n')
-    .copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/views/vendor/jsvalidation')
+    //10 linijka error.insertBefor(element);
+    // .copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/views/vendor/jsvalidation')
     .copy('vendor/proengsoft/laravel-jsvalidation/public', 'resources/js/vendor/jsvalidation')
     .sourceMaps()
     .extract();

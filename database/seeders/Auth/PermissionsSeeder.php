@@ -52,6 +52,12 @@ class PermissionsSeeder extends Seeder
 
         // twurca 
         $userRole = Role::findByName(config('app.creator_role'));
+        $userRole->givePermissionTo('gatunki-index');
+        $userRole->givePermissionTo('gatunki-store');
+        $userRole->givePermissionTo('gwiazdy-index');
+        $userRole->givePermissionTo('gwiazdy-store');
+        $userRole->givePermissionTo('filmy-index');
+        $userRole->givePermissionTo('filmy-store');
 
         // urzytkownik 
         $userRole = Role::findByName(config('app.user_role'));

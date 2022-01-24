@@ -6,11 +6,11 @@
         <script src="{{ asset('js/filmy.js') }}"></script>
     </x-slot>  
     <div class="d-flex flex-row-reverse bd-highlight">
-          @auth 
+          @can('filmy-store') 
           <a class="btn btn-secondary" data-toggle="collapse" href="{{ route('filmy.create') }}" role="button" aria-expanded="false" aria-controls="collapseExample">
             {{ __('translations.buttons.store') }}
           </a>
-          @endauth 
+          @endcan
     </div>    
     <div class="container">
       <h1 class="display-6">{{ __('translations.filmy.title') }}</h1>

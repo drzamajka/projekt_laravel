@@ -4,22 +4,23 @@
   </x-slot>
   <x-slot name="scripts">
     <script type="text/javascript" src="{{ asset('js/film.js') }}"></script>
-    {!!
+    <!-- {!!
       JsValidator::formRequest('App\Http\Requests\Filmy\FilmRequest');
-    !!}    
+    !!}     -->
   </x-slot>
   <div class="container">
     <h1>{{ __('translations.filmy.title') }}</h1>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">
+      <h5 class="card-title">
           @if (isset($edit) && $edit === true)
           {{ __('translations.filmy.labels.edit') }}
           @else
           {{ __('translations.filmy.labels.create') }}
           @endif
         </h5>
-        <form id="film-form" method="POST" enctype="multipart/form-data"
+        <form id="film-form" method="POST" 
+        enctype="multipart/form-data"
           @if (isset($edit) && $edit===true)
             action="{{ route('filmy.update', $film) }}" 
           @else 
@@ -37,10 +38,9 @@
               {{ __('translations.filmy.attribute.type') }}
             </label>
             <div class="col-sm-10">
-              <select class="form-select @error('gatunek_id')is-invalid @enderror" name="gatunek_id"
-                id="film-type" 
-                data-placeholder="{{ __('translations.labels.select2-placeholder') }}"
-                aria-describedby="film-type-error">
+              <select class="form-select select2 @error('gatunek_id')is-invalid @enderror" name="gatunek_id"
+              id="film-type" 
+              aria-describedby="film-type-error">
                 <option></option>
                 @foreach ($types as $type)
                   <option value="{{ $type->id }}"
@@ -69,9 +69,8 @@
               {{ __('translations.filmy.attribute.director') }}
             </label>
             <div class="col-sm-10">
-              <select class="form-select @error('gwiazda_id')is-invalid @enderror" name="gwiazda_id"
-                id="film-director" 
-                data-placeholder="{{ __('translations.labels.select2-placeholder') }}"
+              <select class="form-select select2 @error('gwiazda_id')is-invalid @enderror" name="gwiazda_id"
+                id="film-director"                 
                 aria-describedby="film-director-error">
                 <option></option>
                 @foreach ($directors as $director)
@@ -143,12 +142,41 @@
           </div>
           <!-- okładka -->
           <div class="row mb-3">
-            <label for="film-coverif" class="col-sm-2 col-form-label">
-              {{ __('translations.filmy.attribute.coverif') }}
+            <label class="col-sm-2 col-form-label">
+              {{ __('translations.filmy.attribute.cover') }}
             </label>
-            <div class="col-sm-10">
-              <input class="form-control" type="file" id="film-coverif" name="cover" accept=".jpg,.png,">
+            <div class="col-sm-auto">
+            @if ((isset($film) && $film->czyokladka == 1) || old('film-cover-check') == 'true')
+                <img id="film-cover-default" src="{{ asset('images/covers/default.jpg') }}" class="img-thumbnail" alt="{{ __('translations.filmy.attribute.cover') }}" width="200" STYLE="display: none !important"/>
+                <img id="film-cover-custom" 
+                @if (isset($film) && $film->czyokladka == 1) src="{{ asset('/images/covers/'.$film->id.'.jpg') }}" 
+                @else
+                src="{{ asset('images/covers/default.jpg') }}"
+                @endif
+                class="img-thumbnail" alt="{{ __('translations.filmy.attribute.cover') }}" width="200"/>
+              @else
+                <img id="film-cover-default" src="{{ asset('images/covers/default.jpg') }}" class="img-thumbnail" alt="{{ __('translations.filmy.attribute.cover') }}" width="200"/>
+                <img id="film-cover-custom" src="{{ asset('images/covers/default.jpg') }}" class="img-thumbnail" alt="{{ __('translations.filmy.attribute.cover') }}" width="200" STYLE="display: none !important"/>
+              @endif
             </div>
+            <div class="col-sm">
+              <div class="form-check">
+                <input class="form-check-input" onclick="defaltCover()" type="radio" name="film-cover-check" id="film-cover-check-1" value="false" 
+                @if ((!isset($film) &&  old('film-cover-check') != 'true' ) || (isset($film) && $film->czyokladka != 1)) checked @endif>
+                <label class="form-check-label" for="film-cover-check-1">
+                {{ __('translations.filmy.attribute.default-cover') }}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" onclick="customCover()" type="radio" name="film-cover-check" id="film-cover-check-2" value="true"
+                @if ((isset($film) && $film->czyokladka == 1) || old('film-cover-check') == 'true') checked @endif>
+                <label class="form-check-label" for="film-cover-check-2">
+                {{ __('translations.filmy.attribute.custom-cover') }}
+                </label>
+              </div>
+              <input class="form-control mt-4" type="file" id="film-cover" name="cover" 
+              @if ((!isset($film) &&  old('film-cover-check') != 'true' ) || (isset($film) && $film->czyokladka != 1)) disabled STYLE="display: none !important" @endif  accept=".jpg,.png," >
+            </div> 
           </div>
           
 
@@ -174,7 +202,7 @@
             class="col-lg-12 row d-flex justify-content-between mx-0 p-0">
               <div class="col-lg-5 row m-0 p-0 mb-3">
                 <label for="film-star-id[{{ $i }}]" class="col-auto my-auto">{{ __('translations.filmy.attribute.star', [ 'nr' => $i ]) }}</label>
-                <select class="form-select @error('aktorzy_id.'.($i-1))is-invalid @enderror col" name="aktorzy_id[]"
+                <select class="form-select select2 @error('aktorzy_id.'.($i-1))is-invalid @enderror col" name="aktorzy_id[]"
                   id="film-star-id[{{ $i }}]" 
                   @if (isset($film))
                     @if( count($film->gwiazdy_w_filmie)+1 <= $i ) 
@@ -185,7 +213,6 @@
                       disabled
                     @endif
                   @endif
-                  data-placeholder="{{ __('translations.labels.select2-placeholder') }}"
                   aria-describedby="film-star-id[{{ $i }}]-error">
                   <option></option>
                   @foreach ($directors as $director)
@@ -243,7 +270,7 @@
             </div>
             <!-- STYLE="display: none !important" -->
             <input type="number" name="iloscgwiazd" min="1" max="6"  STYLE="display: none !important"
-            @if (isset($film))value="{{ count($film->gwiazdy_w_filmie)+1 }}"@elsevalue="{{ old('iloscgwiazd') }}"@endif" id="iloscgwiazd"
+            @if (isset($film))value="{{ count($film->gwiazdy_w_filmie)+1 }}"@else value="{{ old('iloscgwiazd') }}"@endif id="iloscgwiazd"
             >
             </div>
           </div>
@@ -269,16 +296,11 @@
       </div>
     </div>
   </div>
-  @if (count($errors) > 0)
+<!-- @if (count($errors) > 0)
     <div class="error">
-        <!-- <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul> -->
         {{ $errors }}
     </div>
-@endif
+@endif -->
 </x-app-layout>
 
 

@@ -45,8 +45,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm btn-outline-secondary text-uppercase" data-bs-dismiss="modal">@lang('comments::comments.cancel')</button>
-                                <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">@lang('comments::comments.update')</button>
+                                <button type="button" class="btn btn-sm btn-secondary text-uppercase" data-bs-dismiss="modal">@lang('comments::comments.cancel')</button>
+                                <button type="submit" class="btn btn-sm btn-success text-uppercase">@lang('comments::comments.update')</button>
                             </div>
                         </form>
                     </div>
@@ -72,8 +72,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm btn-outline-secondary text-uppercase" data-bs-dismiss="modal">@lang('comments::comments.cancel')</button>
-                                <button type="submit" class="btn btn-sm btn-outline-success text-uppercase">@lang('comments::comments.reply')</button>
+                                <button type="button" class="btn btn-sm btn-secondary text-uppercase" data-bs-dismiss="modal">@lang('comments::comments.cancel')</button>
+                                <button type="submit" class="btn btn-sm btn-success text-uppercase">@lang('comments::comments.reply')</button>
                             </div>
                         </form>
                     </div>

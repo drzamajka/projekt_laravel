@@ -1,5 +1,11 @@
 require('./vendor/jsvalidation/js/jsvalidation');
+require('select2');
+// załadowanie tłumaczeń dla języka polskiego
+$.fn.select2.amd.define('select2/i18n/pl', [], require("select2/src/js/select2/i18n/pl"));
+
+
 $(function () {
+
 
     $('form[name=delete-item]').on('submit', function (e) {
         e.preventDefault();
@@ -30,7 +36,43 @@ $(function () {
             }
         });
     });
+
+    $('.select2').select2({
+        theme: 'bootstrap-5',
+        ignore: [],
+        language: config.locale
+    });
+
+    $('#film-cover').change(function(){
+            
+        let reader = new FileReader();
+     
+        reader.onload = (e) => { 
+     
+          $('#film-cover-custom').attr('src', e.target.result); 
+        }
+     
+        reader.readAsDataURL(this.files[0]); 
+       
+       });
 });
+    defaltCover = function()
+    {
+        document.getElementById("film-cover-custom").style.setProperty('display', 'none', 'important');
+        document.getElementById("film-cover-default").style.display = "";
+        document.getElementById("film-cover").style.setProperty('display', 'none', 'important');
+        document.getElementById("film-cover").disabled = true;
+    }
+    customCover = function()
+    {
+        document.getElementById("film-cover-default").style.setProperty('display', 'none', 'important');
+        document.getElementById("film-cover-custom").style.display = "";
+        document.getElementById("film-cover").style.display = "";
+        document.getElementById("film-cover").disabled = false;
+    }
+
+    
+
     addstar = function()
     {
         gwiazdy = document.getElementById("iloscgwiazd").value;

@@ -25,9 +25,9 @@ class FilmDataTable extends DataTable
             ->setRowId('id')
             ->addColumn('okladka', function ($data) {
                 if($data->czyokladka)
-                    return  '<img src="images/covers/'.$data->id.'.jpg" alt="Domyślna okładka" width="50" height="60">';
+                    return  '<img src="images/covers/'.$data->id.'.jpg" class="img-thumbnail" alt="'.__('translations.filmy.attribute.custom-cover').'" width="120">';
                 else    
-                    return  '<img src="images/covers/0.jpg" alt="Domyślna okładka" width="50" height="60">';
+                    return  '<img src="images/covers/default.jpg" class="img-thumbnail" alt="'.__('translations.filmy.attribute.default-cover').'" width="120">';
             })
             ->addColumn('rezyser', function ($data) {
                 return  $data->gwiazda->imie_gwiazdy.' '.$data->gwiazda->nazwisko_gwiazdy;
@@ -107,6 +107,7 @@ class FilmDataTable extends DataTable
 
         return $datatable->make(true);
     }
+
 
     public function query()
     {

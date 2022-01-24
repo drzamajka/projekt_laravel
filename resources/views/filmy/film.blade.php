@@ -46,9 +46,9 @@
         <div class="row mb-3">
           <div style="width: 180px;" >
             @if($film->czyokladka == 1)
-              <img src="/images/covers/{{$film->id}}.jpg" alt="Domyślna okładka" width="180" height="225">
+              <img src="/images/covers/{{$film->id}}.jpg" class="img-thumbnail" alt="{{__('translations.filmy.attribute.custom-cover')}}" width="180" height="225">
             @else  
-              <img src="/images/covers/0.jpg" alt="Domyślna okładka" width="180" height="225">
+              <img src="/images/covers/default.jpg" class="img-thumbnail" alt="{{__('translations.filmy.attribute.default-cover')}}" width="180" height="225">
             @endif
           </div>
           <div class="col-sm-8 themed-grid-col row">

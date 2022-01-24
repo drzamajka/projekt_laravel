@@ -46,7 +46,7 @@
                 </div>
                 
             </div>
-            <button type="submit" class="btn btn-sm btn-outline-success text-uppercase mt-3">@lang('comments::comments.submit')</button>
+            <button type="submit" class="btn btn-sm btn-success text-uppercase mt-3">@lang('comments::comments.submit')</button>
         </form>
     </div>
 </div>

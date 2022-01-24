@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\GatunekController;
 use App\Http\Controllers\GwiazdaController;
 
@@ -28,18 +29,15 @@ Route::get('/', function () {
     return view('filmy.index');
 })->name('home');
 
-//Route::get('/', [FilmController::class, 'index'] )->name('home');
+
 Route::name('filmy.')->prefix('filmy')->group(function () {
     Route::post('/datatable', [FilmController::class, 'dataTable'])
             ->name('datatable');
-    Route::get('/film&{id}', [FilmController::class, 'film'])
-        ->where('id', '[0-9]+')
-        ->name('film');
     Route::get('{film}', [FilmController::class, 'film'])
         ->where('film', '[0-9]+')
         ->name('index');                        
  });           
- //Route::get('/', function () { return view('dashboard'); } )->name('home');
+
 
 
 Route::get('/dashboard', function () {
@@ -47,6 +45,16 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::name('uzytkownik.')->prefix('uzytkownik')->group(function () {
+        // uzytkownik
+        Route::get('{uzytkownik}', [UserController::class, 'uzytkownik'])
+        ->where('uzytkownik', '[0-9]+')
+        ->name('index');
+        // nadaj uprawnienia
+        Route::get('{uzytkownik}/upgrade', [UserController::class, 'nadajUprawnienia'])
+        ->where('uzytkownik', '[0-9]+')
+        ->name('upgrade');
+    });
 
     Route::name('gatunki.')->prefix('gatunki')->group(function () {
         // lista wszystkich
@@ -91,6 +99,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/datatable', [GwiazdaController::class, 'dataTable'])
             ->name('datatable')
             ->middleware(['permission:gwiazdy-index']);
+        // selext2 asynchroniczne
+        Route::get('ajax', [GwiazdaController::class, 'ajax'])
+            ->name('ajax')
+            ->middleware(['permission:gwiazdy-index']);    
         // dodawanie wpisu   
         Route::get('create', [GwiazdaController::class, 'create'])
             ->name('create')
@@ -119,9 +131,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::name('filmy.')->prefix('filmy')->group(function () {
-        // lista wszystkich
-        Route::get('', [FilmController::class, 'index'])
-            ->name('index');
+
         // dodawanie wpisu   
         Route::get('create', [FilmController::class, 'create'])
             ->name('create')
