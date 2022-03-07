@@ -1,5 +1,18 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/gatunki.js": "/js/gatunki.js",
+    "/js/gwiazdy.js": "/js/gwiazdy.js",
+    "/js/filmy.js": "/js/filmy.js",
+    "/js/film.js": "/js/film.js",
+    "/js/uzytkownik.js": "/js/uzytkownik.js",
+    "/js/manifest.js": "/js/manifest.js",
     "/css/app.css": "/css/app.css",
-    "/css/form.css": "/css/form.css"
+    "/css/gwiazdy.css": "/css/gwiazdy.css",
+    "/css/filmy.css": "/css/filmy.css",
+    "/css/gatunki.css": "/css/gatunki.css",
+    "/css/form.css": "/css/form.css",
+    "/css/uzytkownik.css": "/css/uzytkownik.css",
+    "/css/film.css": "/css/film.css",
+    "/js/vendor.js": "/js/vendor.js",
+    "/vendor/datatables/i18n/pl.json": "/vendor/datatables/i18n/pl.json"
 }

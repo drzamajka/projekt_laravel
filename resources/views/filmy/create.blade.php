@@ -206,7 +206,7 @@
                     @endif
                   @endif
                   aria-describedby="film-star-id[{{ $i }}]-error">
-                  <option></option>
+                  <option></option>    
                   @foreach ($directors as $director)
                     <option value="{{ $director->id }}"
                     @if (isset($film) && $i <= count($film->gwiazdy_w_filmie))
