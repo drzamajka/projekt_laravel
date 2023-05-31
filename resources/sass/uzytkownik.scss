@@ -1,12 +1,12 @@
 @import "~select2/src/scss/core";
-@import "~select2-bootstrap-5-theme/src/select2-bootstrap-5-theme";
+
 
 // usunięcie zaokrągleń przycisków formularza umieszczonych w grupie przycisków
 .btn-group > form > .btn {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  
+
   .btn-group > form:not(:first-child) > .btn {
     margin-left: -1px;
     border-top-left-radius: 0;

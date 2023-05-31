@@ -1,3 +1,17 @@
-body,html{height:100%}body{align-items:center;display:flex;padding-bottom:20px;padding-top:20px}.form{margin:auto;max-width:450px;width:100%}
+html,
+body {
+  height: 100%;
+}
 
-/*# sourceMappingURL=form.css.map*/
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.form {
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+}

@@ -62,7 +62,7 @@ $(function () {
             },
             processResults: function (response) {
                 var data = $.map(response, function (director) {
-                    director.text = director.text || director.imie_gwiazdy+' '+director.nazwisko_gwiazdy; // replace name with the property used for the text                  
+                    director.text = director.text || director.imie_gwiazdy+' '+director.nazwisko_gwiazdy; // replace name with the property used for the text
                     return director;
                 });
                 return {
@@ -73,16 +73,16 @@ $(function () {
     });
 
     $('#film-cover').change(function(){
-            
+
         let reader = new FileReader();
-     
-        reader.onload = (e) => { 
-     
-          $('#film-cover-custom').attr('src', e.target.result); 
+
+        reader.onload = (e) => {
+
+          $('#film-cover-custom').attr('src', e.target.result);
         }
-     
-        reader.readAsDataURL(this.files[0]); 
-       
+
+        reader.readAsDataURL(this.files[0]);
+
        });
 });
     defaltCover = function()
@@ -100,14 +100,14 @@ $(function () {
         document.getElementById("film-cover").disabled = false;
     }
 
-    
+
 
     addstar = function()
     {
         gwiazdy = document.getElementById("iloscgwiazd").value;
         if(!$.isNumeric(gwiazdy))
             gwiazdy = 1;
-        console.log('gwiazdu='+gwiazdy);    
+        console.log('gwiazdu='+gwiazdy);
         if(gwiazdy<=5)
         {
             document.getElementById("star_nr"+gwiazdy).style.display = "";
@@ -123,9 +123,9 @@ $(function () {
         //gwiazdy=id+1;
         for(i=id;i<5;i++)
         {
-            document.getElementById("film-star-role["+i+"]").value = 
+            document.getElementById("film-star-role["+i+"]").value =
             document.getElementById("film-star-role["+(i+1)+"]").value;
-            document.getElementById("film-star-id["+i+"]").value = 
+            document.getElementById("film-star-id["+i+"]").value =
             document.getElementById("film-star-id["+(i+1)+"]").value;
         }
         if(gwiazdy>1)

@@ -14,5 +14,9 @@
     "/css/uzytkownik.css": "/css/uzytkownik.css",
     "/css/film.css": "/css/film.css",
     "/js/vendor.js": "/js/vendor.js",
-    "/vendor/datatables/i18n/pl.json": "/vendor/datatables/i18n/pl.json"
+    "/vendor/datatables/i18n/pl.json": "/vendor/datatables/i18n/pl.json",
+    "/resources/js/vendor/jsvalidation/js/jsvalidation.js": "/resources/js/vendor/jsvalidation/js/jsvalidation.js",
+    "/resources/js/vendor/jsvalidation/js/jsvalidation.js.map": "/resources/js/vendor/jsvalidation/js/jsvalidation.js.map",
+    "/resources/js/vendor/jsvalidation/js/jsvalidation.min.js": "/resources/js/vendor/jsvalidation/js/jsvalidation.min.js",
+    "/resources/js/vendor/jsvalidation/js/jsvalidation.min.js.map": "/resources/js/vendor/jsvalidation/js/jsvalidation.min.js.map"
 }
